@@ -3,10 +3,33 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import nftAbi from "../constants/TestNft.json"
 import Image from "next/image"
+import Card from "web3uikit"
+import { ethers } from "ethers"
+import UpdateListingNftModal from "./UpdateListingNftModal"
+
+const truncateAddress = (fullAddress, length) => {
+    if (fullAddress.length <= length) {
+        return fullAddress
+    }
+    const separator = "..."
+    const finalAddressLength = length - separator.length
+    const frontFinalAddress = Math.ceil(finalAddressLength / 2)
+    const backFinalAddress = Math.floor(finalAddressLength / 2)
+    return (
+        fullAddress.substring(0, frontFinalAddress) +
+        separator +
+        fullAddress.substring(fullAddress.length - backFinalAddress)
+    )
+}
 
 export default function NftItem({}) {
-    const { isWeb3Enabled } = useMoralis()
+    const { isWeb3Enabled, account } = useMoralis()
+    const [tokenName, setTokenName] = useState("")
+    const [tokenDescription, setTokenDescription] = useState("")
     const [imageURI, setImageURI] = useState("")
+    const [showModal, setShowModal] = useState(false)
+    const hideModal = () => setShowModal(false)
+
     const { runContractFunction: getTokenURI } = useWeb3Contract({
         abi: nftAbi,
         contractAddress: nftAddress,
@@ -23,6 +46,8 @@ export default function NftItem({}) {
             const imageURI = tokenURIResponse.image
             const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.io/ipfs/")
             setImageURI(imageURIURL)
+            setTokenName(tokenURIResponse.name)
+            setTokenDescription(tokenURIResponse.description)
         }
     }
 
@@ -32,15 +57,50 @@ export default function NftItem({}) {
         }
     }, [isWeb3Enabled])
 
-    return (
-        <div>
-            <div>
-                {imageURI ? (
-                    <Image loader={() => imageURI} src={imageURI} height="200" width="200" />
-                ) : (
-                    <div>Loading...</div>
-                )}
-            </div>
-        </div>
-    )
+    const isOwnedByUSer = seller == account || seller == undefined
+
+    const formattedSellerAddress = isOwnedByUSer ? "you" : truncateAddress(seller || "", 15)
+
+    const handleCardClick = () => {
+        isOwnedByUSer ? setShowModal(true) : console.log("You can buy! ")
+    }
 }
+
+return (
+    <div>
+        <div>
+            {imageURI ? (
+                <div>
+                    <UpdateListingNftModal
+                        isVisible={showModal}
+                        tokenId={tokenId}
+                        marketplaceAddress={marketplaceAddress}
+                        nftAddress={nftAddress}
+                        onClose={hideModal}
+                    />
+                    <Card
+                        title={tokenName}
+                        description={tokenDescription}
+                        onClick={handleCardClick}
+                    >
+                        <div className="flex flex-col items-end gap-2">
+                            <div>#{tokenId}</div>
+                            <div className="italic text-sm">Owned by {formattedSellerAddress}</div>
+                            <Image
+                                loader={() => imageURI}
+                                src={imageURI}
+                                height="200"
+                                width="200"
+                            />
+                            <div className="font-bold">
+                                {ethers.utils.formatUnits(price, "ether")} ETH
+                            </div>
+                        </div>
+                    </Card>
+                </div>
+            ) : (
+                <div>Loading...</div>
+            )}
+        </div>
+    </div>
+)
