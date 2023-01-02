@@ -25,7 +25,17 @@ export default function UpdateListingNftModal({
         },
     })
 
-    const handleUpdateListingSucess = () => {}
+    const handleUpdateListingSucess = async (tx) => {
+        await tx.wait(1)
+        dispatch({
+            type: "success",
+            message: "Listing updated",
+            title: "Listing updated, please refresh the page",
+            position: "topR",
+        })
+        onClose && onClose()
+        setPriceToUpdateListing("0")
+    }
 
     return (
         <Modal
@@ -35,9 +45,7 @@ export default function UpdateListingNftModal({
             onOk={() => {
                 updateListing({
                     onError: (error) => console.log(error),
-                    onSucess: () => {
-                        handleUpdateListingSucess()
-                    },
+                    onSucess: handleUpdateListingSucess(),
                 })
             }}
             onCancel={onClose}
