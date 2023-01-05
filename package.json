@@ -6,7 +6,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "eslint": "eslint . --ext .js"
   },
   "dependencies": {
     "@apollo/client": "^3.7.3",
@@ -23,8 +24,11 @@
     "web3uikit": "^1.0.4"
   },
   "devDependencies": {
+    "@next/eslint-plugin-next": "^13.1.1",
     "autoprefixer": "^10.4.13",
     "dotenv": "^16.0.3",
+    "eslint": "^8.31.0",
+    "eslint-plugin-react": "^7.31.11",
     "postcss": "^8.4.20",
     "tailwindcss": "^3.2.4"
   }

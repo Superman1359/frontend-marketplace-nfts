@@ -1,6 +1,3 @@
-import Head from "next/head"
-import Image from "next/image"
-import { Inter } from "@next/font/google"
 import styles from "../styles/Home.module.css"
 import { Form, useNotification } from "web3uikit"
 import { ethers } from "ethers"
@@ -8,8 +5,7 @@ import nftAbi from "../constants/TestNft.json"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
-
-const inter = Inter({ subsets: ["latin"] })
+import React from "react"
 
 export default function Home() {
     const { chainId } = useMoralis() // here it is in 0x...

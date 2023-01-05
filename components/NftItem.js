@@ -6,6 +6,16 @@ import Image from "next/image"
 import { Card, useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import UpdateListingNftModal from "./UpdateListingNftModal"
+import React from "react"
+import PropTypes from "prop-types"
+
+NftItem.propTypes = {
+    nftAddress: PropTypes.string.isRequired,
+    tokenId: PropTypes.string.isRequired,
+    marketplaceAddress: PropTypes.string.isRequired,
+    price: PropTypes.string.isRequired,
+    seller: PropTypes.string.isRequired,
+}
 
 const truncateAddress = (fullAddress, length) => {
     if (fullAddress.length <= length) {
@@ -89,7 +99,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                   onError: (error) => {
                       console.log(error)
                   },
-                  onSuccess: (tx) => {
+                  onSuccess: () => {
                       handleBuyItemSuccess()
                   },
               })
@@ -121,6 +131,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                     src={imageURI}
                                     height="200"
                                     width="200"
+                                    alt="Image of the NFT"
                                 />
                                 <div className="font-bold">
                                     {ethers.utils.formatUnits(price, "ether")} ETH

@@ -1,5 +1,5 @@
-import styles from "../styles/Home.module.css"
 import NftItem from "../components/NftItem"
+import React from "react"
 import { useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
 import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"

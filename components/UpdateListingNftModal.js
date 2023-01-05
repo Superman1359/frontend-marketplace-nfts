@@ -3,6 +3,16 @@ import { useState } from "react"
 import { useWeb3Contract } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import { ethers } from "ethers"
+import React from "react"
+import PropTypes from "prop-types"
+
+UpdateListingNftModal.propTypes = {
+    nftAddress: PropTypes.string.isRequired,
+    tokenId: PropTypes.string.isRequired,
+    isVisible: PropTypes.bool.isRequired,
+    marketplaceAddress: PropTypes.string.isRequired,
+    onClose: PropTypes.func.isRequired,
+}
 
 export default function UpdateListingNftModal({
     nftAddress,
@@ -44,7 +54,7 @@ export default function UpdateListingNftModal({
             onOk={() => {
                 updateListing({
                     onError: (error) => console.log(error),
-                    onSuccess: (tx) => {
+                    onSuccess: () => {
                         handleUpdateListingSuccess()
                     },
                 })

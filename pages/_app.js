@@ -1,9 +1,16 @@
 import "../styles/globals.css"
 import Head from "next/head"
+import React from "react"
 import { MoralisProvider } from "react-moralis"
 import Header from "../components/Header"
 import { NotificationProvider } from "web3uikit"
-import { ApolloClient, ApolloProvider, AppoloProvider, InMemoryCache } from "@apollo/client"
+import { ApolloClient, ApolloProvider, InMemoryCache } from "@apollo/client"
+import PropTypes from "prop-types"
+
+App.propTypes = {
+    Component: PropTypes.elementType.isRequired,
+    pageProps: PropTypes.object.isRequired,
+}
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
