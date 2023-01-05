@@ -35,7 +35,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
         abi: nftAbi,
         contractAddress: nftAddress,
         functionName: "getTokenURI",
-        params: tokenId,
+        params: { tokenId: tokenId },
     })
 
     const { runContractFunction: buyItem } = useWeb3Contract({
@@ -89,7 +89,9 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                   onError: (error) => {
                       console.log(error)
                   },
-                  onSuccess: handleBuyItemSuccess(),
+                  onSuccess: (tx) => {
+                      handleBuyItemSuccess()
+                  },
               })
     }
     return (

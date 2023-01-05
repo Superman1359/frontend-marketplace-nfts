@@ -13,15 +13,14 @@ const inter = Inter({ subsets: ["latin"] })
 
 export default function Home() {
     const { chainId } = useMoralis() // here it is in 0x...
-    const chainIdDecimal = chainId ? parseInt(chainId).toString() : "31337"
-    const marketplaceAddress = networkMapping[chainIdDecimal].nftMarketplace[0]
+    const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
+    const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
 
     const dispatch = useNotification()
 
     const { runContractFunction } = useWeb3Contract()
 
     async function approveAndList(data) {
-        console.log("Approving..")
         const nftAddress = data.data[0].inputResult
         const tokenId = data.data[1].inputResult
         const price = ethers.utils.parseUnits(data.data[2].inputResult, "ether").toString()
@@ -37,19 +36,19 @@ export default function Home() {
         }
         await runContractFunction({
             params: approveOptions,
-            onSuccess: handleApproveSuccess(nftAddress, tokenId, price),
+            onSuccess: (tx) => handleApproveSuccess(tx, nftAddress, tokenId, price),
             onError: (error) => {
                 console.log(error)
             },
         })
     }
 
-    async function handleApproveSuccess(nftAddress, tokenId, price) {
-        console.log("Listing the NFT...")
+    async function handleApproveSuccess(tx, nftAddress, tokenId, price) {
+        await tx.wait()
         const listOptions = {
             abi: nftMarketplaceAbi,
             contractAddress: marketplaceAddress,
-            functionName: "listNft",
+            functionName: "listItem",
             params: {
                 nftAddress: nftAddress,
                 tokenId: tokenId,
@@ -59,7 +58,7 @@ export default function Home() {
 
         await runContractFunction({
             params: listOptions,
-            onSuccess: handleListSuccess,
+            onSuccess: () => handleListSuccess,
             onError: (error) => {
                 console.log(error)
             },

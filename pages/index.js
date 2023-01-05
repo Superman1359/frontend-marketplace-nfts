@@ -21,7 +21,6 @@ export default function Home() {
                         <div>Loading... </div>
                     ) : (
                         listedNfts.activeItems.map((nft) => {
-                            console.log(nft)
                             const { price, nftAddress, tokenId, seller } = nft
                             return (
                                 <div>
