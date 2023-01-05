@@ -22,7 +22,7 @@ const truncateAddress = (fullAddress, length) => {
     )
 }
 
-export default function NftItem({}) {
+export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress, seller }) {
     const { isWeb3Enabled, account } = useMoralis()
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
@@ -92,43 +92,44 @@ export default function NftItem({}) {
                   onSuccess: handleBuyItemSuccess(),
               })
     }
-}
-
-return (
-    <div>
+    return (
         <div>
-            {imageURI ? (
-                <div>
-                    <UpdateListingNftModal
-                        isVisible={showModal}
-                        tokenId={tokenId}
-                        marketplaceAddress={marketplaceAddress}
-                        nftAddress={nftAddress}
-                        onClose={hideModal}
-                    />
-                    <Card
-                        title={tokenName}
-                        description={tokenDescription}
-                        onClick={handleCardClick}
-                    >
-                        <div className="flex flex-col items-end gap-2">
-                            <div>#{tokenId}</div>
-                            <div className="italic text-sm">Owned by {formattedSellerAddress}</div>
-                            <Image
-                                loader={() => imageURI}
-                                src={imageURI}
-                                height="200"
-                                width="200"
-                            />
-                            <div className="font-bold">
-                                {ethers.utils.formatUnits(price, "ether")} ETH
+            <div>
+                {imageURI ? (
+                    <div>
+                        <UpdateListingNftModal
+                            isVisible={showModal}
+                            tokenId={tokenId}
+                            marketplaceAddress={marketplaceAddress}
+                            nftAddress={nftAddress}
+                            onClose={hideModal}
+                        />
+                        <Card
+                            title={tokenName}
+                            description={tokenDescription}
+                            onClick={handleCardClick}
+                        >
+                            <div className="flex flex-col items-end gap-2">
+                                <div>#{tokenId}</div>
+                                <div className="italic text-sm">
+                                    Owned by {formattedSellerAddress}
+                                </div>
+                                <Image
+                                    loader={() => imageURI}
+                                    src={imageURI}
+                                    height="200"
+                                    width="200"
+                                />
+                                <div className="font-bold">
+                                    {ethers.utils.formatUnits(price, "ether")} ETH
+                                </div>
                             </div>
-                        </div>
-                    </Card>
-                </div>
-            ) : (
-                <div>Loading...</div>
-            )}
+                        </Card>
+                    </div>
+                ) : (
+                    <div>Loading...</div>
+                )}
+            </div>
         </div>
-    </div>
-)
+    )
+}

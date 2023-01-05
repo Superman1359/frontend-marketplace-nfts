@@ -50,14 +50,7 @@ export default function UpdateListingNftModal({
             }}
             onCancel={onClose}
             onCloseButtonPressed={onClose}
-            title={
-                <div style={{ display: "flex", gap: 10 }}>
-                    <SvgEdit fill="#68738D" fontSize={28} />
-                    <Typography color="#68738D" variant="h3">
-                        Edit Nickname
-                    </Typography>
-                </div>
-            }
+            title={<div style={{ display: "flex", gap: 10 }}>Edit Title</div>}
         >
             <div
                 style={{
