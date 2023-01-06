@@ -13,8 +13,8 @@ export default function Home() {
     const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
 
     return (
-        <div className="container mx-auto">
-            <h1 className="py-4 px-4 font-bold text-2xl">Recently Listed</h1>
+        <div className="px-16 pt-2 bg-backgroundColor">
+            <h1 className="pt-10 px-4 font-bold text-2xl text-deepblue">Recently Listed</h1>
             <div className="flex flex-wrap">
                 {isWeb3Enabled ? (
                     loading || !listedNfts ? (

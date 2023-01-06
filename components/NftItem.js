@@ -8,6 +8,7 @@ import { ethers } from "ethers"
 import UpdateListingNftModal from "./UpdateListingNftModal"
 import React from "react"
 import PropTypes from "prop-types"
+import { ethLogo } from "./assets/eth_logo.png"
 
 NftItem.propTypes = {
     nftAddress: PropTypes.string.isRequired,
@@ -117,15 +118,10 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                             onClose={hideModal}
                         />
                         <Card
-                            title={tokenName}
-                            description={tokenDescription}
                             onClick={handleCardClick}
+                            className="bg-white border-indigo border-2 border-solid"
                         >
-                            <div className="flex flex-col items-end gap-2">
-                                <div>#{tokenId}</div>
-                                <div className="italic text-sm">
-                                    Owned by {formattedSellerAddress}
-                                </div>
+                            <div className="flex flex-col justify-center items-center ">
                                 <Image
                                     loader={() => imageURI}
                                     src={imageURI}
@@ -133,8 +129,21 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                     width="200"
                                     alt="Image of the NFT"
                                 />
-                                <div className="font-bold">
-                                    {ethers.utils.formatUnits(price, "ether")} ETH
+                                <div className="text-deepblue flex flex-col justify-center items-start w-full">
+                                    <div className="font-bold flex flex-row">
+                                        <div>#{tokenId}</div>
+                                        <div className="pl-2">{tokenName}</div>
+                                    </div>
+                                    <a className="text-sm">{tokenDescription}</a>
+                                    <div className="flex flex-row justify-between">
+                                        <div className="font-extrabold">
+                                            {ethers.utils.formatUnits(price, "ether")} ETH{" "}
+                                        </div>
+                                        <div className="italic text-sm pl-2">
+                                            Owned by {formattedSellerAddress}
+                                        </div>
+                                        <img src={ethLogo} alt="eth logo" />
+                                    </div>
                                 </div>
                             </div>
                         </Card>

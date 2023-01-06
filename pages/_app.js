@@ -25,6 +25,10 @@ export default function App({ Component, pageProps }) {
                 <meta name="description" content="A decentralized NFT Marketplace" />
                 <meta name="viewport" content="width=device-width, initial-scale=1" />
                 <meta name="next-head-count" content="2" />
+                <link
+                    href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;200;300;400;500;600;700;800;900&family=Roboto&display=swap"
+                    rel="stylesheet"
+                ></link>
                 <lifirefnk rel="icon" href="/favicon.ico" />
             </Head>
             <MoralisProvider initializeOnMount={false}>
