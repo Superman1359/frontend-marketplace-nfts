@@ -4,8 +4,8 @@ import React from "react"
 
 export default function Header() {
     return (
-        <nav className="px-16  flex flex-row justify-between items-center  testtt	">
-            <h1 className="py-4 px-4 text-5xl text-deepblue tracking-tighter font-medium">
+        <nav className="flex flex-row px-24 pl-28 justify-between items-center	">
+            <h1 className="py-4 text-5xl text-deepblue tracking-tighter font-medium">
                 {" "}
                 <a className="font-extrabold">NFT</a>Marketplace
             </h1>

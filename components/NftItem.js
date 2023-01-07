@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState, useRef } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import nftAbi from "../constants/TestNft.json"
@@ -105,11 +105,29 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                   },
               })
     }
+
+    const [screenWidth, setScreenWidth] = useState(0)
+    const [screenHeight, setScreenHeight] = useState(0)
+
+    useEffect(() => {
+        function handleResize() {
+            setScreenWidth(window.innerWidth)
+            setScreenHeight(window.innerHeight)
+        }
+
+        window.addEventListener("resize", handleResize)
+        handleResize()
+
+        return () => {
+            window.removeEventListener("resize", handleResize)
+        }
+    }, [])
+
     return (
         <div>
             <div>
                 {imageURI ? (
-                    <div>
+                    <div className="w-full pr-4 pb-4">
                         <UpdateListingNftModal
                             isVisible={showModal}
                             tokenId={tokenId}
@@ -119,35 +137,37 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                         />
                         <Card
                             onClick={handleCardClick}
-                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw h-22-vw"
+                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw h-19vw"
                         >
-                            <div className="flex flex-col justify-center items-center ">
+                            <div className="flex flex-col justify-start items-center mb-24">
                                 <Image
                                     loader={() => imageURI}
                                     src={imageURI}
-                                    height="200"
-                                    width="200"
+                                    width={screenWidth / 4}
+                                    height={200}
                                     alt="Image of the NFT"
+                                    className="rounded-36 mb-3"
                                 />
-                                <div className="text-deepblue flex flex-col justify-center items-start w-full">
-                                    <div className="font-bold flex flex-row">
+                                <div className="text-deepblue flex flex-col justify-center items-start w-full ">
+                                    <div className="font-bold flex flex-row pb-1 pl-2">
                                         <div>#{tokenId}</div>
-                                        <div className="pl-2">{tokenName}</div>
+                                        <div className="pl-2 pb-1">{tokenName}</div>
                                     </div>
-                                    <a className="text-sm">{tokenDescription}</a>
-                                    <div className="flex flex-row  justify-center items-center ">
-                                        <div className="pr-2">
+                                    <a className="text-sm pl-2">{tokenDescription}</a>
+                                    <div className="flex flex-row pl-2 justify-between items-center">
+                                        <div className="flex flex-row mr-8 mt-3 items-center">
                                             <Image
                                                 src={ethLogo}
                                                 alt="Ethereum logo"
                                                 width={25}
                                                 height={25}
+                                                className="mr-2"
                                             />
+                                            <div className="font-extrabold">
+                                                {ethers.utils.formatUnits(price, "ether")} ETH{" "}
+                                            </div>
                                         </div>
-                                        <div className="font-extrabold">
-                                            {ethers.utils.formatUnits(price, "ether")} ETH{" "}
-                                        </div>
-                                        <div className="italic text-sm pl-2">
+                                        <div className="italic text-sm pl-2 mt-2">
                                             Owned by {formattedSellerAddress}
                                         </div>
                                     </div>

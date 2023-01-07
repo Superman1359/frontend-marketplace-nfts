@@ -2,6 +2,10 @@
 module.exports = {
     content: ["./pages/**/*.{js,ts,jsx,tsx}", "./components/**/*.{js,ts,jsx,tsx}"],
     theme: {
+        height: {
+            "19vw": "21vw",
+            "1/2": "10%",
+        },
         fontFamily: {
             sans: ["Montserrat", "sans-serif"],
         },
@@ -29,10 +33,7 @@ module.exports = {
                 "20vh": "200vh",
             },
             width: {
-                "20vw": "20vw",
-            },
-            height: {
-                "22vw": "22vw",
+                "20vw": "20.5vw",
             },
         },
     },
