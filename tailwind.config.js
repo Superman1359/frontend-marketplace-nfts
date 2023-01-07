@@ -25,6 +25,15 @@ module.exports = {
             borderStyle: {
                 solid: "solid !important",
             },
+            minHeight: {
+                "20vh": "200vh",
+            },
+            width: {
+                "20vw": "20vw",
+            },
+            height: {
+                "22vw": "22vw",
+            },
         },
     },
     plugins: [],

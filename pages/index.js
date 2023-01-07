@@ -13,7 +13,7 @@ export default function Home() {
     const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
 
     return (
-        <div className="px-16 pt-2 bg-backgroundColor">
+        <div className="px-16 pt-2 h-full">
             <h1 className="pt-10 px-4 font-bold text-2xl text-deepblue">Recently Listed</h1>
             <div className="flex flex-wrap">
                 {isWeb3Enabled ? (
@@ -21,6 +21,8 @@ export default function Home() {
                         <div>Loading... </div>
                     ) : (
                         listedNfts.activeItems.map((nft) => {
+                            console.log("listed nfts: ", listedNfts)
+                            console.log("active nfts: ", listedNfts)
                             const { price, nftAddress, tokenId, seller } = nft
                             return (
                                 <div>

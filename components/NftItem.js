@@ -8,7 +8,7 @@ import { ethers } from "ethers"
 import UpdateListingNftModal from "./UpdateListingNftModal"
 import React from "react"
 import PropTypes from "prop-types"
-import { ethLogo } from "./assets/eth_logo.png"
+import ethLogo from "./assets/eth_logo.png"
 
 NftItem.propTypes = {
     nftAddress: PropTypes.string.isRequired,
@@ -119,7 +119,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                         />
                         <Card
                             onClick={handleCardClick}
-                            className="bg-white border-indigo border-2 border-solid"
+                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw h-22-vw"
                         >
                             <div className="flex flex-col justify-center items-center ">
                                 <Image
@@ -135,14 +135,21 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                         <div className="pl-2">{tokenName}</div>
                                     </div>
                                     <a className="text-sm">{tokenDescription}</a>
-                                    <div className="flex flex-row justify-between">
+                                    <div className="flex flex-row  justify-center items-center ">
+                                        <div className="pr-2">
+                                            <Image
+                                                src={ethLogo}
+                                                alt="Ethereum logo"
+                                                width={25}
+                                                height={25}
+                                            />
+                                        </div>
                                         <div className="font-extrabold">
                                             {ethers.utils.formatUnits(price, "ether")} ETH{" "}
                                         </div>
                                         <div className="italic text-sm pl-2">
                                             Owned by {formattedSellerAddress}
                                         </div>
-                                        <img src={ethLogo} alt="eth logo" />
                                     </div>
                                 </div>
                             </div>
