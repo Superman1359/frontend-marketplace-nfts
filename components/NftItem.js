@@ -127,7 +127,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
         <div>
             <div>
                 {imageURI ? (
-                    <div className="w-full pr-4 pb-4">
+                    <div className="w-full pr-4 pb-4 ">
                         <UpdateListingNftModal
                             isVisible={showModal}
                             tokenId={tokenId}
@@ -137,10 +137,11 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                         />
                         <Card
                             onClick={handleCardClick}
-                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw h-19vw"
+                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw "
                         >
-                            <div className="flex flex-col justify-start items-center mb-24">
+                            <div className="flex flex-col justify-start items-center h-full ">
                                 <Image
+                                    unoptimized
                                     loader={() => imageURI}
                                     src={imageURI}
                                     width={screenWidth / 4}
