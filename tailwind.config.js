@@ -19,6 +19,7 @@ module.exports = {
         extend: {
             borderRadius: {
                 36: "36px",
+                14: "14px",
             },
             borderColor: {
                 indigo: "#C7D2FE !important",
@@ -33,7 +34,7 @@ module.exports = {
                 "20vh": "200vh",
             },
             width: {
-                "20vw": "20.5vw",
+                "20vw": "20vw",
             },
             margin: {
                 "1/4-vh": "25vh",

@@ -57,6 +57,61 @@ label[data-testid="test-input-label"] {
     background-color: #f1f5f9;
 }
 
+label[for="inputUpdateListingNftModal"] {
+    color: #7f7ce8;
+    background-color: #ffffff;
+}
+
+#modalNft * :hover label {
+    color: #7f7ce8;
+}
+
+#modalNft > div {
+    width: 50%;
+}
+
+#modalNft > div > footer {
+    padding: 20px 20px;
+    display: flex;
+    justify-content: flex-end;
+    box-shadow: 0px -8px 16px rgba(171, 190, 209, 0.4);
+}
+
+#modalNft > div > div > div > div:last-child {
+    border-radius: 36px !important;
+}
+
+#modalNft > div > div > div > div:last-child > label input {
+    background-color: red;
+}
+.kjxEkH input + label {
+    color: #7f7ce8;
+}
+
+#modalNft > div > footer > button:not(#modal-cancel-button) {
+    background: #22c55e;
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+    border-color: #22c55e;
+}
+
+#modal-cancel-button {
+    margin-right: 15px;
+    border-radius: 49px;
+}
+
+.contentModalCard {
+    position: relative;
+    top: -2vh;
+}
+
+.cancelList {
+    background: #ef4444;
+
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+}
+
 button[data-testid="test-button"] {
     border: 2px solid #22c55e;
     background: #ffffff;

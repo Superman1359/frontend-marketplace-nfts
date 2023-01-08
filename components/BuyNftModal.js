@@ -1,58 +1,45 @@
-import { Modal, Input, useNotification } from "web3uikit"
-import { useState, useEffect } from "react"
-import ethLogo from "./assets/eth_logo.png"
-import { ethers } from "ethers"
-import Image from "next/image"
+import { Modal, useNotification } from "web3uikit"
 import { useWeb3Contract } from "react-moralis"
+import { useState, useEffect } from "react"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import React from "react"
+import { ethers } from "ethers"
+import Image from "next/image"
+import ethLogo from "./assets/eth_logo.png"
 import PropTypes from "prop-types"
 
-UpdateListingNftModal.propTypes = {
+BuyNftModal.propTypes = {
     nftAddress: PropTypes.string.isRequired,
     tokenId: PropTypes.string.isRequired,
     isVisible: PropTypes.bool.isRequired,
     marketplaceAddress: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
-    price: PropTypes.number.isRequired,
-    tokenName: PropTypes.string.isRequired,
     imageURI: PropTypes.string.isRequired,
+    tokenName: PropTypes.string.isRequired,
 }
 
-export default function UpdateListingNftModal({
+export default function BuyNftModal({
     nftAddress,
     tokenId,
     isVisible,
     marketplaceAddress,
     onClose,
     price,
-    tokenName,
     imageURI,
+    tokenName,
 }) {
     const dispatch = useNotification()
-    const [PriceToUpdateListing, setPriceToUpdateListing] = useState(0)
-    const { runContractFunction: updateListing } = useWeb3Contract({
+
+    const { runContractFunction: buyItem } = useWeb3Contract({
         abi: nftMarketplaceAbi,
         contractAddress: marketplaceAddress,
-        functionName: "updateListing",
+        functionName: "buyItem",
+        msgValue: price,
         params: {
             nftAddress: nftAddress,
             tokenId: tokenId,
-            newPrice: ethers.utils.parseEther(PriceToUpdateListing || "0"),
         },
     })
-
-    const handleUpdateListingSuccess = () => {
-        dispatch({
-            type: "success",
-            message: "listing updated",
-            title: "Transaction to update listing sent",
-            position: "topR",
-        })
-        onClose && onClose()
-        setPriceToUpdateListing("0")
-    }
-
     const [screenWidth, setScreenWidth] = useState(0)
 
     useEffect(() => {
@@ -68,16 +55,27 @@ export default function UpdateListingNftModal({
         }
     }, [])
 
+    const handleBuyItemSuccess = () => {
+        dispatch({
+            type: "success",
+            message: "Buy Order",
+            title: "Transaction to buy sent",
+            position: "topR",
+        })
+    }
+
     return (
         <Modal
             cancelText="Cancel"
             id="modalNft"
             isVisible={isVisible}
             onOk={() => {
-                updateListing({
-                    onError: (error) => console.log(error),
+                buyItem({
+                    onError: (error) => {
+                        console.log(error)
+                    },
                     onSuccess: () => {
-                        handleUpdateListingSuccess()
+                        handleBuyItemSuccess()
                     },
                 })
             }}
@@ -108,20 +106,6 @@ export default function UpdateListingNftModal({
                         {ethers.utils.formatUnits(price, "ether")} ETH{" "}
                     </div>
                 </div>
-                <Input
-                    id="inputUpdateListingNftModal"
-                    label="Update listing price in L1 Currency (ETH...)"
-                    name="New listing price"
-                    type="number"
-                    width="55%"
-                    onChange={(event) => {
-                        setPriceToUpdateListing(event.target.value)
-                    }}
-                />
-
-                {/* <div className="text-[#7f7ce8]">or</div>
-
-                <button className="cancelList">Cancel Listing</button> */}
             </div>
         </Modal>
     )

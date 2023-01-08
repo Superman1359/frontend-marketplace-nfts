@@ -1,11 +1,11 @@
-import { useEffect, useState, useRef } from "react"
+import { useEffect, useState } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
-import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import nftAbi from "../constants/TestNft.json"
 import Image from "next/image"
 import { Card, useNotification } from "web3uikit"
 import { ethers } from "ethers"
 import UpdateListingNftModal from "./UpdateListingNftModal"
+import BuyNftModal from "./BuyNftModal"
 import React from "react"
 import PropTypes from "prop-types"
 import ethLogo from "./assets/eth_logo.png"
@@ -40,24 +40,12 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
     const [imageURI, setImageURI] = useState("")
     const [showModal, setShowModal] = useState(false)
     const hideModal = () => setShowModal(false)
-    const dispatch = useNotification()
 
     const { runContractFunction: getTokenURI } = useWeb3Contract({
         abi: nftAbi,
         contractAddress: nftAddress,
         functionName: "getTokenURI",
         params: { tokenId: tokenId },
-    })
-
-    const { runContractFunction: buyItem } = useWeb3Contract({
-        abi: nftMarketplaceAbi,
-        contractAddress: marketplaceAddress,
-        functionName: "buyItem",
-        msgValue: price,
-        params: {
-            nftAddress: nftAddress,
-            tokenId: tokenId,
-        },
     })
 
     async function updateUI() {
@@ -82,37 +70,19 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
 
     const isOwnedByUSer = seller == account || seller == undefined
 
-    const formattedSellerAddress = isOwnedByUSer ? "you" : truncateAddress(seller || "", 15)
-
-    const handleBuyItemSuccess = () => {
-        dispatch({
-            type: "success",
-            message: "Item bought",
-            title: "Item bought",
-            position: "topR",
-        })
-    }
+    const formattedSellerAddress = +isOwnedByUSer
+        ? " Owned by you"
+        : truncateAddress(seller || "", 15)
 
     const handleCardClick = () => {
-        isOwnedByUSer
-            ? setShowModal(true)
-            : buyItem({
-                  onError: (error) => {
-                      console.log(error)
-                  },
-                  onSuccess: () => {
-                      handleBuyItemSuccess()
-                  },
-              })
+        setShowModal(true)
     }
 
     const [screenWidth, setScreenWidth] = useState(0)
-    const [screenHeight, setScreenHeight] = useState(0)
 
     useEffect(() => {
         function handleResize() {
             setScreenWidth(window.innerWidth)
-            setScreenHeight(window.innerHeight)
         }
 
         window.addEventListener("resize", handleResize)
@@ -127,13 +97,28 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
         <div>
             <div>
                 {imageURI ? (
-                    <div className="w-full pr-4 pb-4 ">
+                    <div className="pr-4 pb-4 ">
                         <UpdateListingNftModal
-                            isVisible={showModal}
+                            isVisible={showModal && isOwnedByUSer}
                             tokenId={tokenId}
                             marketplaceAddress={marketplaceAddress}
                             nftAddress={nftAddress}
                             onClose={hideModal}
+                            price={price}
+                            tokenName={tokenName}
+                            imageURI={imageURI}
+                            textButton={"Save new listing price"}
+                        />
+                        <BuyNftModal
+                            isVisible={showModal && !isOwnedByUSer}
+                            tokenId={tokenId}
+                            marketplaceAddress={marketplaceAddress}
+                            nftAddress={nftAddress}
+                            onClose={hideModal}
+                            price={price}
+                            tokenName={tokenName}
+                            imageURI={imageURI}
+                            textButton={"Confirm buy"}
                         />
                         <Card
                             onClick={handleCardClick}
@@ -157,7 +142,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                         <div className="pl-2 pb-1">{tokenName}</div>
                                     </div>
                                     <a className="text-sm pl-2">{tokenDescription}</a>
-                                    <div className="flex flex-row pl-2 justify-between items-center">
+                                    <div className="flex flex-row pl-2 justify-center items-center">
                                         <div className="flex flex-row mr-8 mt-3 items-center">
                                             <Image
                                                 src={ethLogo}
@@ -171,7 +156,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                             </div>
                                         </div>
                                         <div className="italic text-sm pl-2 mt-2">
-                                            Owned by {formattedSellerAddress}
+                                            {formattedSellerAddress}
                                         </div>
                                     </div>
                                 </div>
