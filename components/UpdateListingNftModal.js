@@ -23,7 +23,6 @@ export default function UpdateListingNftModal({
 }) {
     const dispatch = useNotification()
     const [PriceToUpdateListing, setPriceToUpdateListing] = useState(0)
-
     const { runContractFunction: updateListing } = useWeb3Contract({
         abi: nftMarketplaceAbi,
         contractAddress: marketplaceAddress,

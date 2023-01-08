@@ -10,3 +10,68 @@ body {
 .imagetest {
     object-fit: contain;
 }
+
+[data-testid="test-form-title"] {
+    color: #312dcf !important;
+}
+
+input[data-testid="test-input-label"] {
+    color: #312dcf;
+}
+
+#Main_form {
+    background-color: #f1f5f9;
+}
+
+#Main_form * :not(button#form-submit) {
+    color: #7f7ce8;
+}
+
+button[data-testid="test-button"][id="form-submit"][type="submit"] span {
+    background: #22c55e;
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+    color: #ffffff !important;
+}
+
+button#form-submit {
+    background: #22c55e;
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+    color: #ffffff;
+}
+
+div.form-item:focus {
+    border: 2px solid #22c55e;
+}
+
+div[class="sc-fXynhf kjxEkH input input_empty"][data-testid="test-input"] {
+    outline: #7f7ce8 solid 1px;
+}
+
+[id^="input_"] {
+    background-color: #f1f5f9;
+}
+
+label[data-testid="test-input-label"] {
+    background-color: #f1f5f9;
+}
+
+button[data-testid="test-button"] {
+    border: 2px solid #22c55e;
+    background: #ffffff;
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+    color: #22c55e !important;
+    transition: all 0.2s ease;
+}
+
+button[data-testid="test-button"]:hover {
+    border: 2px solid #22c55e !important;
+    color: #ffffff !important;
+
+    background: #22c55e !important;
+}
+button[data-testid="test-button"]:focus {
+    border: 2px solid #22c55e !important;
+}

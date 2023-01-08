@@ -140,15 +140,17 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                             className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw "
                         >
                             <div className="flex flex-col justify-start items-center h-full ">
-                                <Image
-                                    unoptimized
-                                    loader={() => imageURI}
-                                    src={imageURI}
-                                    width={screenWidth / 4}
-                                    height={200}
-                                    alt="Image of the NFT"
-                                    className="rounded-36 mb-3"
-                                />
+                                <div className="">
+                                    <Image
+                                        unoptimized
+                                        loader={() => imageURI}
+                                        src={imageURI}
+                                        width={screenWidth / 5}
+                                        height={200}
+                                        alt="Image of the NFT"
+                                        className="rounded-36 mb-3  "
+                                    />
+                                </div>
                                 <div className="text-deepblue flex flex-col justify-center items-start w-full ">
                                     <div className="font-bold flex flex-row pb-1 pl-2">
                                         <div>#{tokenId}</div>
