@@ -3,8 +3,20 @@
 @tailwind utilities;
 
 body {
-    height: 100%;
     background-color: #f1f5f9;
+    overflow: hidden;
+}
+
+#img_lp {
+    height: 95% !important;
+    width: auto;
+}
+#explore_lp {
+    background: linear-gradient(90deg, #312dcf 0%, #7073f9 108.08%);
+    border: 2px solid #ffffff;
+
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
 }
 
 .imagetest {
@@ -77,6 +89,10 @@ label[for="inputUpdateListingNftModal"] {
     box-shadow: 0px -8px 16px rgba(171, 190, 209, 0.4);
 }
 
+#modalNft > div > div {
+    margin-bottom: 5%;
+}
+
 #modalNft > div > div > div > div:last-child {
     border-radius: 36px !important;
 }
@@ -88,11 +104,24 @@ label[for="inputUpdateListingNftModal"] {
     color: #7f7ce8;
 }
 
+#container_landing_page {
+    height: 92vh !important;
+}
+
 #modalNft > div > footer > button:not(#modal-cancel-button) {
     background: #22c55e;
     box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
     border-radius: 49px;
     border-color: #22c55e;
+}
+
+#buy_button_modal {
+    background: #22c55e;
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+    border-color: #22c55e;
+    color: #ffffff;
+    padding: 7px 14px;
 }
 
 #modal-cancel-button {

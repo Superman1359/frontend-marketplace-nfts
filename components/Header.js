@@ -5,12 +5,13 @@ import React from "react"
 export default function Header() {
     return (
         <nav className="flex flex-row px-24 pl-28 justify-between items-center	">
-            <h1 className="py-4 text-5xl text-deepblue tracking-tighter font-medium">
-                {" "}
-                <a className="font-extrabold">NFT</a>Marketplace
-            </h1>
+            <Link href="/" className="py-4 text-5xl text-deepblue tracking-tighter font-medium">
+                <p>
+                    <span className="font-extrabold">NFT</span>Marketplace
+                </p>
+            </Link>
             <div className="flex flex-row font-semibold	items-center text-deepblue text-xl ">
-                <Link href="/" className="mr-4 p-6">
+                <Link href="/explore" className="mr-4 p-6">
                     Explore
                 </Link>
                 <div className="mr-4 w-full bg-gradient-to-r from-deepblue to-springgreen rounded-full p-1">

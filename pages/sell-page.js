@@ -7,7 +7,7 @@ import { useWeb3Contract, useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
 import { useEffect, useState, React } from "react"
 
-export default function Home() {
+export default function SellPage() {
     const { chainId, account, isWeb3Enabled } = useMoralis() // here it is in 0x...
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null

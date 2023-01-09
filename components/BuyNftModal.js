@@ -106,6 +106,9 @@ export default function BuyNftModal({
                         {ethers.utils.formatUnits(price, "ether")} ETH{" "}
                     </div>
                 </div>
+                <button className="font-semibold" id="buy_button_modal">
+                    Buy this NFT!
+                </button>
             </div>
         </Modal>
     )

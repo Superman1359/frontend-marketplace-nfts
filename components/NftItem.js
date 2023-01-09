@@ -164,7 +164,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                         </Card>
                     </div>
                 ) : (
-                    <div>Loading...</div>
+                    <div className="text-deepblue font-semibold pr-8">Loading...</div>
                 )}
             </div>
         </div>

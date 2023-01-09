@@ -15,6 +15,7 @@ module.exports = {
             white: "#FFFFFF",
             backgroundColor: "#F1F5F9",
             indigo: "#C7D2FE",
+            flashgreen: "#1FE326",
         },
         extend: {
             borderRadius: {

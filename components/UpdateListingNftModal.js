@@ -14,7 +14,7 @@ UpdateListingNftModal.propTypes = {
     isVisible: PropTypes.bool.isRequired,
     marketplaceAddress: PropTypes.string.isRequired,
     onClose: PropTypes.func.isRequired,
-    price: PropTypes.number.isRequired,
+    price: PropTypes.string.isRequired,
     tokenName: PropTypes.string.isRequired,
     imageURI: PropTypes.string.isRequired,
 }
@@ -96,13 +96,13 @@ export default function UpdateListingNftModal({
                 <div className="text-deepblue font-semibold	">
                     #{tokenId} {tokenName}
                 </div>
-                <div className="flex flex-row  items-center text-deepblue mb-7 mt-2">
+                <div className="flex flex-row  items-center text-deepblue mb-14 mt-2 text-[1.4em]">
                     <Image
                         src={ethLogo}
                         alt="Ethereum logo"
                         width={25}
                         height={25}
-                        className="mr-2"
+                        className="mr-3"
                     />
                     <div className="font-extrabold">
                         {ethers.utils.formatUnits(price, "ether")} ETH{" "}

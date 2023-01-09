@@ -1,44 +1,44 @@
-import NftItem from "../components/NftItem"
-import React from "react"
-import { useMoralis } from "react-moralis"
-import networkMapping from "../constants/networkMapping.json"
-import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
-import { useQuery } from "@apollo/client"
+import { React } from "react"
+import Link from "next/link"
+import Image from "next/image"
+import ImgLandingPage from "../components/assets/Illustration2.png"
 
-export default function Home() {
-    const { isWeb3Enabled, chainId } = useMoralis()
-    const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
-    const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
-
-    const { loading, error, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
-
+export default function LandingPage() {
     return (
-        <div className="pt-2 h-full px-24 pl-28">
-            <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
-            <div className="flex flex-wrap">
-                {isWeb3Enabled ? (
-                    loading || !listedNfts ? (
-                        <div>Loading... </div>
-                    ) : (
-                        listedNfts.activeItems.map((nft) => {
-                            const { price, nftAddress, tokenId, seller } = nft
-                            return (
-                                <div>
-                                    <NftItem
-                                        price={price}
-                                        nftAddress={nftAddress}
-                                        tokenId={tokenId}
-                                        marketplaceAddress={marketplaceAddress}
-                                        seller={seller}
-                                        key={`${nftAddress}:${tokenId}`}
-                                    ></NftItem>
-                                </div>
-                            )
-                        })
-                    )
-                ) : (
-                    <div>Web3 not connected </div>
-                )}
+        <div id="container_landing_page" className="flex flex-row justify-start">
+            <div className="w-[45%] pl-28 flex flex-col justify-center items-center h-full mr-12">
+                <div>
+                    <div className="font-extrabold text-deepblue text-[3em] mb-6">
+                        <h1>
+                            Explore the Boundaries of{" "}
+                            <span className="text-flashgreen">Digital Art</span> and{" "}
+                            <span className="text-flashgreen">Collectibility</span>
+                        </h1>
+                    </div>
+                    <p className="text-[#5F5CE8] font-medium text-[1.25em] mb-10">
+                        Discover and collect the art of the future at our NFT marketplace. Explore
+                        a wide range of digital art and collectibles from talented artists and
+                        creators. Find your next favorite piece or trade with other collectors to
+                        build a great place. Join the community of NFT fans and get in on the
+                        action today!
+                    </p>
+                    <Link
+                        href="/explore"
+                        id="explore_lp"
+                        className="font-semibold px-8 py-2 text-white"
+                    >
+                        Explore
+                    </Link>
+                </div>
+            </div>
+            <div className="flex flex-col justify-end items-end	 h-[100%]">
+                <Image
+                    id="img_lp"
+                    unoptimized
+                    src={ImgLandingPage}
+                    alt="Image of the NFT"
+                    className=" "
+                />
             </div>
         </div>
     )
