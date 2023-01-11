@@ -6,6 +6,7 @@ body {
     background-color: #f1f5f9;
 }
 
+
 #img_lp {
     height: 95% !important;
     width: auto;
@@ -105,6 +106,8 @@ label[for="inputUpdateListingNftModal"] {
 
 #container_landing_page {
     height: 92vh !important;
+    overflow-y: hidden;
+
 }
 
 #modalNft > div > footer > button:not(#modal-cancel-button) {

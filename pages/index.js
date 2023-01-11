@@ -1,13 +1,14 @@
 import { React } from "react"
 import Link from "next/link"
 import Image from "next/image"
-import ImgLandingPage from "../components/assets/Illustration2.png"
+import ImgLandingPage from "../components/assets/Illustration.png"
 
 export default function LandingPage() {
     return (
         <div id="container_landing_page" className="flex flex-row justify-start">
-            <div className="w-[45%] pl-28 flex flex-col justify-center items-center h-full mr-12">
+            <div className="w-[59%] pl-28 flex flex-col justify-center items-center h-full mr-12">
                 <div>
+
                     <div className="font-extrabold text-deepblue text-[3em] mb-6">
                         <h1>
                             Explore the Boundaries of{" "}
@@ -31,9 +32,8 @@ export default function LandingPage() {
                     </Link>
                 </div>
             </div>
-            <div className="flex flex-col justify-end items-end	 h-[100%]">
+            <div className="flex flex-col justify-end items-end w-[70%] mb-[5%]">
                 <Image
-                    id="img_lp"
                     unoptimized
                     src={ImgLandingPage}
                     alt="Image of the NFT"
