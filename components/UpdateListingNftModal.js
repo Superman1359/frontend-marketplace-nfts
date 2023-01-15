@@ -31,7 +31,19 @@ export default function UpdateListingNftModal({
 }) {
     const dispatch = useNotification()
     const [PriceToUpdateListing, setPriceToUpdateListing] = useState(0)
+
     const { runContractFunction: updateListing } = useWeb3Contract({
+        abi: nftMarketplaceAbi,
+        contractAddress: marketplaceAddress,
+        functionName: "updateListing",
+        params: {
+            nftAddress: nftAddress,
+            tokenId: tokenId,
+            newPrice: ethers.utils.parseEther(PriceToUpdateListing || "0"),
+        },
+    })
+
+    const { runContractFunction: cancelListing } = useWeb3Contract({
         abi: nftMarketplaceAbi,
         contractAddress: marketplaceAddress,
         functionName: "updateListing",
@@ -51,6 +63,19 @@ export default function UpdateListingNftModal({
         })
         onClose && onClose()
         setPriceToUpdateListing("0")
+    }
+
+    const handleCancelListingSuccess = () => {
+        dispatch({
+            type: "success",
+            message: "Cancel listing",
+            title: "Transaction to cancel listing sent",
+            position: "topR",
+            params: {
+                nftAddress: nftAddress,
+                tokenId: tokenId,
+            },
+        })
     }
 
     const [screenWidth, setScreenWidth] = useState(0)
@@ -119,9 +144,21 @@ export default function UpdateListingNftModal({
                     }}
                 />
 
-                {/* <div className="text-[#7f7ce8]">or</div>
+                <div className="text-[#7f7ce8]">or</div>
 
-                <button className="cancelList">Cancel Listing</button> */}
+                <button
+                    onClick={() => {
+                        cancelListing({
+                            onError: (error) => console.log(error),
+                            onSuccess: () => {
+                                handleCancelListingSuccess()
+                            },
+                        })
+                    }}
+                    className="cancelList text-[#ffffff] font-bold px-3 py-1.5"
+                >
+                    Cancel Listing
+                </button>
             </div>
         </Modal>
     )

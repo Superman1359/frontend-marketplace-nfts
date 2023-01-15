@@ -45,17 +45,18 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
         abi: nftAbi,
         contractAddress: nftAddress,
         functionName: "tokenURI",
-        params: { tokenId: tokenId },
+        params: { _tokenId: tokenId },
     })
 
     async function updateUI() {
         console.log(`GETTING TOKEN URI of ${tokenId}, ${nftAddress} `)
         const nftUri = await tokenURI()
 
-        console.log(nftUri)
+        console.log("the uri is: ", nftUri)
         // Not everyone got IPFS companion, so we use gateway to go to https
         if (nftUri) {
             const requestURL = nftUri.replace("ipfs://", "https://ipfs.io/ipfs/")
+            console.log("REQUEST URL: ", requestURL)
             const nftUriResponse = await (await fetch(requestURL)).json()
             const imageURI = nftUriResponse.image
             const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.io/ipfs/")

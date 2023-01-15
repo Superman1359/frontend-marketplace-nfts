@@ -22,7 +22,7 @@ export default function Header() {
                         Sell NFTs
                     </Link>
                 </div>
-                <ConnectButton moralisAuth={false} />
+                <ConnectButton moralisAuth={true} />
             </div>
         </nav>
     )

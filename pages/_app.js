@@ -14,7 +14,7 @@ App.propTypes = {
 
 const client = new ApolloClient({
     cache: new InMemoryCache(),
-    uri: "https://api.studio.thegraph.com/query/40329/nft-marketplace/v0.0.1",
+    uri: "https://api.studio.thegraph.com/query/40329/nft-marketplace-v2/v1.2",
 })
 
 export default function App({ Component, pageProps }) {

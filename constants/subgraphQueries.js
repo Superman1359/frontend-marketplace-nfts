@@ -3,7 +3,7 @@ import { gql } from "@apollo/client"
 const GET_ACTIVE_ITEMS = gql`
     {
         activeItems(
-            first: 2
+            first: 50
             orderBy: price
             orderDirection: desc
             where: { buyer: "0x0000000000000000000000000000000000000000" }

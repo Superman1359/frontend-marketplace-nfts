@@ -22,7 +22,6 @@ export default function Home() {
                     ) : (
                         listedNfts.activeItems.map((nft) => {
                             const { price, nftAddress, tokenId, seller } = nft
-                            console.log(nft)
                             return (
                                 <div key={`${nftAddress}:${tokenId}`}>
                                     <NftItem
@@ -38,7 +37,7 @@ export default function Home() {
                         })
                     )
                 ) : (
-                    <div>Web3 not connected </div>
+                    <div className="text-deepblue font-extrabold pr-8">Web3 not connected </div>
                 )}
             </div>
         </div>
