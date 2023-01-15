@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react"
 import { useWeb3Contract, useMoralis } from "react-moralis"
-import nftAbi from "../constants/TestNft.json"
+import nftAbi from "../constants/EtherealNFTs.json"
 import Image from "next/image"
 import { Card, useNotification } from "web3uikit"
 import { ethers } from "ethers"
@@ -41,7 +41,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
     const [showModal, setShowModal] = useState(false)
     const hideModal = () => setShowModal(false)
 
-    const { runContractFunction: getTokenURI } = useWeb3Contract({
+    const { runContractFunction: tokenURI } = useWeb3Contract({
         abi: nftAbi,
         contractAddress: nftAddress,
         functionName: "tokenURI",
@@ -49,16 +49,19 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
     })
 
     async function updateUI() {
-        const tokenURI = await getTokenURI()
+        console.log(`GETTING TOKEN URI of ${tokenId}, ${nftAddress} `)
+        const nftUri = await tokenURI()
+
+        console.log(nftUri)
         // Not everyone got IPFS companion, so we use gateway to go to https
-        if (tokenURI) {
-            const requestURL = tokenURI.replace("ipfs://", "https://ipfs.io/ipfs/")
-            const tokenURIResponse = await (await fetch(requestURL)).json()
-            const imageURI = tokenURIResponse.image
+        if (nftUri) {
+            const requestURL = nftUri.replace("ipfs://", "https://ipfs.io/ipfs/")
+            const nftUriResponse = await (await fetch(requestURL)).json()
+            const imageURI = nftUriResponse.image
             const imageURIURL = imageURI.replace("ipfs://", "https://ipfs.io/ipfs/")
             setImageURI(imageURIURL)
-            setTokenName(tokenURIResponse.name)
-            setTokenDescription(tokenURIResponse.description)
+            setTokenName(nftUriResponse.name)
+            setTokenDescription(nftUriResponse.description)
         }
     }
 

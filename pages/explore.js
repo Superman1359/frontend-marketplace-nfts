@@ -22,6 +22,7 @@ export default function Home() {
                     ) : (
                         listedNfts.activeItems.map((nft) => {
                             const { price, nftAddress, tokenId, seller } = nft
+                            console.log(nft)
                             return (
                                 <div key={`${nftAddress}:${tokenId}`}>
                                     <NftItem

@@ -1,7 +1,7 @@
 import styles from "../styles/Home.module.css"
 import { Form, useNotification, Button } from "web3uikit"
 import { ethers, utils } from "ethers"
-import nftAbi from "../constants/TestNft.json"
+import nftAbi from "../constants/EtherealNFTs.json"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
 import { useWeb3Contract, useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
