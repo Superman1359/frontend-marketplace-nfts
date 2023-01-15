@@ -44,7 +44,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
     const { runContractFunction: getTokenURI } = useWeb3Contract({
         abi: nftAbi,
         contractAddress: nftAddress,
-        functionName: "getTokenURI",
+        functionName: "tokenURI",
         params: { tokenId: tokenId },
     })
 
