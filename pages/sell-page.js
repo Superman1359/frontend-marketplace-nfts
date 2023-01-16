@@ -41,14 +41,19 @@ export default function SellPage() {
         if (!isWeb3Enabled) {
             dispatch({
                 type: "error",
-                message: "Please connect to Web3 first",
+                title: "Web3 Connection failed",
+                message: "Please connect to Web3 to interact",
+                position: "topR",
             })
         } else if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
             approveAndList()
-        } else {
+        } else if (dispatch) {
+            console.log("We doing shitty stuff")
             dispatch({
                 type: "warning",
+                title: "Listing failed",
                 message: "All fields are required and should be a positive number.",
+                position: "topR",
             })
         }
     }
@@ -139,6 +144,15 @@ export default function SellPage() {
 
     return (
         <div className={`${styles.container} flex flex-col items-center mt-[17vh]	`}>
+            <h1>
+                {isWeb3Enabled ? (
+                    <a></a>
+                ) : (
+                    <div className="text-[#EF4444] font-extrabold mt-[-50px]">
+                        Please connect to Web3
+                    </div>
+                )}{" "}
+            </h1>
             <h1 className="text-[#312dcf] font-bold text-2xl">Sell your NFT</h1>
             <form className="sellForm">
                 <label>
@@ -176,6 +190,7 @@ export default function SellPage() {
                 }}
                 text="List NFT"
                 type="button"
+                className="mb-[5%]"
             />
             {proceeds != "0.0" ? (
                 <div className="flex flex-col items-center">
