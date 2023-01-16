@@ -6,7 +6,6 @@ body {
     background-color: #f1f5f9;
 }
 
-
 #img_lp {
     height: 95% !important;
     width: auto;
@@ -107,7 +106,6 @@ label[for="inputUpdateListingNftModal"] {
 #container_landing_page {
     height: 92vh !important;
     overflow-y: hidden;
-
 }
 
 #modalNft > div > footer > button:not(#modal-cancel-button) {
@@ -141,6 +139,54 @@ label[for="inputUpdateListingNftModal"] {
 
     box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
     border-radius: 49px;
+}
+
+.sellInput {
+    width: 100%;
+    background-color: #f2f2f2;
+    border-radius: 46px;
+    border: solid 1px #7f7ce8;
+    color: #7f7ce8;
+    font-weight: normal;
+    padding: 8px 50px;
+    margin-bottom: 10%;
+}
+
+input.sellInput:focus {
+    border: solid 1px #7f7ce8 !important;
+    outline-color: #7f7ce8;
+}
+
+input.sellInput:active {
+    border: solid 1px #7f7ce8 !important;
+    outline-color: #7f7ce8;
+}
+
+.sellForm * {
+    /* background-color: #f1f5f9; */
+}
+.sellForm {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    box-sizing: border-box;
+    border-radius: 16px;
+    padding: 16px;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    appearance: none;
+    display: none;
+}
+
+input[type="number"]::-moz-inner-spin-button,
+input[type="number"]::-moz-outer-spin-button {
+    -moz-appearance: none;
+    appearance: none;
+    display: none;
 }
 
 button[data-testid="test-button"] {

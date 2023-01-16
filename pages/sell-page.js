@@ -12,16 +12,49 @@ export default function SellPage() {
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
 
+    const [nftAddress, setNftAddress] = useState("")
+    const [tokenId, setTokenId] = useState("")
+    const [priceListing, setPriceListing] = useState("")
+
     const [proceeds, setProceeds] = useState("0")
 
     const dispatch = useNotification()
 
     const { runContractFunction } = useWeb3Contract()
 
-    async function approveAndList(data) {
-        const nftAddress = data.data[0].inputResult
-        const tokenId = data.data[1].inputResult
-        const price = ethers.utils.parseUnits(data.data[2].inputResult, "ether").toString()
+    const handleChangeNftAddress = (e) => {
+        setNftAddress(e.target.value)
+    }
+
+    const handleChangePriceListing = (e) => {
+        setPriceListing(e.target.value)
+    }
+
+    const handleChangeTokenId = (e) => {
+        setTokenId(e.target.value)
+    }
+
+    const isValidNumber = (value) => value !== "" && !isNaN(value) && parseFloat(value) > 0
+    const isValid = (value) => value !== "" && !isNaN(value)
+
+    function handleSubmitClick() {
+        if (!isWeb3Enabled) {
+            dispatch({
+                type: "error",
+                message: "Please connect to Web3 first",
+            })
+        } else if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
+            approveAndList()
+        } else {
+            dispatch({
+                type: "warning",
+                message: "All fields are required and should be a positive number.",
+            })
+        }
+    }
+
+    async function approveAndList() {
+        const price = ethers.utils.parseUnits(priceListing, "ether").toString()
 
         const approveOptions = {
             abi: nftAbi,
@@ -42,26 +75,28 @@ export default function SellPage() {
     }
 
     async function setupUI() {
-        const returnedProceeds = await runContractFunction({
-            params: {
-                abi: nftMarketplaceAbi,
-                contractAddress: marketplaceAddress,
-                functionName: "getProceeds",
+        if (isWeb3Enabled) {
+            const returnedProceeds = await runContractFunction({
                 params: {
-                    seller: account,
+                    abi: nftMarketplaceAbi,
+                    contractAddress: marketplaceAddress,
+                    functionName: "getProceeds",
+                    params: {
+                        seller: account,
+                    },
                 },
-            },
-            onError: (error) => console.log(error),
-        })
-        if (returnedProceeds) {
-            const ethAmount = utils.formatEther(returnedProceeds)
-            setProceeds(ethAmount)
+                onError: (error) => console.log(error),
+            })
+            if (returnedProceeds) {
+                const ethAmount = utils.formatEther(returnedProceeds)
+                setProceeds(ethAmount)
+            }
         }
     }
 
     useEffect(() => {
         setupUI()
-    }, [proceeds, account, isWeb3Enabled, chainId])
+    }, [isWeb3Enabled])
 
     async function handleApproveSuccess(tx, nftAddress, tokenId, price) {
         await tx.wait()
@@ -104,40 +139,48 @@ export default function SellPage() {
 
     return (
         <div className={`${styles.container} flex flex-col items-center mt-[17vh]	`}>
-            <Form
-                onSubmit={approveAndList}
-                data={[
-                    {
-                        name: "Enter NFT Address...",
-                        type: "text",
-                        value: "",
-                        key: "nftAddress",
-                        required: true,
-                    },
-                    {
-                        name: "NFT Token ID",
-                        type: "number",
-                        value: "",
-                        key: "tokenId",
-                        required: true,
-                    },
-                    {
-                        name: "Price (ETH)",
-                        type: "number",
-                        value: "",
-                        key: "price",
-                        required: true,
-                    },
-                ]}
-                title="Sell your NFt"
-                id="Main_form"
-                className="$ flex flex-col items-center mb-[10vh]"
-            />
+            <h1 className="text-[#312dcf] font-bold text-2xl">Sell your NFT</h1>
+            <form className="sellForm">
+                <label>
+                    <input
+                        type="text"
+                        name="name"
+                        placeholder="Enter NFT Address..."
+                        className="sellInput"
+                        onChange={handleChangeNftAddress}
+                    />
+                </label>
+                <label>
+                    <input
+                        type="number"
+                        name="name"
+                        placeholder="NFT Token ID"
+                        className="sellInput"
+                        onChange={handleChangeTokenId}
+                    />
+                </label>
+                <label>
+                    <input
+                        type="number"
+                        name="name"
+                        placeholder="Price (ETH)"
+                        className="sellInput"
+                        onChange={handleChangePriceListing}
+                    />
+                </label>
+            </form>
 
+            <Button
+                onClick={() => {
+                    handleSubmitClick()
+                }}
+                text="List NFT"
+                type="button"
+            />
             {proceeds != "0.0" ? (
                 <div className="flex flex-col items-center">
                     <div className="text-[#312DCF] font-semibold mb-5">
-                        Withdraw {proceeds}ETH proceeds
+                        Withdraw {proceeds} ETH proceeds
                     </div>
                     <Button
                         onClick={() => {
