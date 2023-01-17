@@ -16,6 +16,7 @@ BuyNftModal.propTypes = {
     onClose: PropTypes.func.isRequired,
     imageURI: PropTypes.string.isRequired,
     tokenName: PropTypes.string.isRequired,
+    price: PropTypes.number.isRequired,
 }
 
 export default function BuyNftModal({

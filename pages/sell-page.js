@@ -1,5 +1,5 @@
 import styles from "../styles/Home.module.css"
-import { Form, useNotification, Button } from "web3uikit"
+import { useNotification, Button } from "web3uikit"
 import { ethers, utils } from "ethers"
 import nftAbi from "../constants/EtherealNFTs.json"
 import nftMarketplaceAbi from "../constants/NftMarketplace.json"
@@ -13,7 +13,14 @@ export default function SellPage() {
     let marketplaceAddress
     const dispatch = useNotification()
     useEffect(() => {
-        if (!(chainIdDecimal in networkMapping)) {
+        if (!isWeb3Enabled) {
+            dispatch({
+                type: "error",
+                title: "Web3 not connected",
+                message: "Please connect to Web3",
+                position: "topR",
+            })
+        } else if (!(chainIdDecimal in networkMapping)) {
             dispatch({
                 type: "error",
                 title: "Chain not handled",
@@ -47,7 +54,7 @@ export default function SellPage() {
     const isValidNumber = (value) => value !== "" && !isNaN(value) && parseFloat(value) > 0
     const isValid = (value) => value !== "" && !isNaN(value)
 
-    function checkWeb3Connection() {
+    function handleSubmitClick() {
         if (!isWeb3Enabled) {
             dispatch({
                 type: "error",
@@ -55,7 +62,6 @@ export default function SellPage() {
                 message: "Please connect to Web3 to interact",
                 position: "topR",
             })
-            return false
         } else if (!(chainIdDecimal in networkMapping)) {
             dispatch({
                 type: "error",
@@ -63,25 +69,14 @@ export default function SellPage() {
                 message: "Please connect to Goerli testnet",
                 position: "topR",
             })
-            return false
-        } else {
-            return true
-        }
-    }
-
-    function handleSubmitClick() {
-        if (checkWeb3Connection()) {
-            if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
-                approveAndList()
-            } else if (dispatch) {
-                console.log("We doing shitty stuff")
-                dispatch({
-                    type: "warning",
-                    title: "Listing failed",
-                    message: "All fields are required and should be a positive number.",
-                    position: "topR",
-                })
-            }
+        } else if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
+            approveAndList()
+            dispatch({
+                type: "warning",
+                title: "Listing failed",
+                message: "All fields are required and should be a positive number.",
+                position: "topR",
+            })
         }
     }
 
@@ -226,16 +221,32 @@ export default function SellPage() {
                     </div>
                     <Button
                         onClick={() => {
-                            runContractFunction({
-                                params: {
-                                    abi: nftMarketplaceAbi,
-                                    contractAddress: marketplaceAddress,
-                                    functionName: "withdrawProceeds",
-                                    params: {},
-                                },
-                                onError: (error) => console.log(error),
-                                onSuccess: () => handleWithdrawSuccess,
-                            })
+                            if (!isWeb3Enabled) {
+                                dispatch({
+                                    type: "error",
+                                    title: "Web3 Connection failed",
+                                    message: "Please connect to Web3 to interact",
+                                    position: "topR",
+                                })
+                            } else if (!(chainIdDecimal in networkMapping)) {
+                                dispatch({
+                                    type: "error",
+                                    title: "Chain not handled",
+                                    message: "Please connect to Goerli testnet",
+                                    position: "topR",
+                                })
+                            } else {
+                                runContractFunction({
+                                    params: {
+                                        abi: nftMarketplaceAbi,
+                                        contractAddress: marketplaceAddress,
+                                        functionName: "withdrawProceeds",
+                                        params: {},
+                                    },
+                                    onError: (error) => console.log(error),
+                                    onSuccess: () => handleWithdrawSuccess,
+                                })
+                            }
                         }}
                         text="Withdraw"
                         type="button"

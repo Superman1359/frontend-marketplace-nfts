@@ -1,6 +1,4 @@
-import styles from "../styles/Home.module.css"
-import { useNotification, Button } from "web3uikit"
-import { ethers, utils } from "ethers"
+import { useNotification } from "web3uikit"
 import Image from "next/image"
 import EtherealSplash from "../components/assets/splash_ethereal.png"
 import etherealNftAbi from "../constants/EtherealNFTs.json"
@@ -9,7 +7,7 @@ import networkMapping from "../constants/networkMapping.json"
 import { useEffect, useState, React } from "react"
 
 export default function SellPage() {
-    const { chainId, account, isWeb3Enabled } = useMoralis() // here it is in 0x...
+    const { chainId, isWeb3Enabled } = useMoralis() // here it is in 0x...
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     let etherealAddress
     const dispatch = useNotification()
@@ -25,6 +23,28 @@ export default function SellPage() {
             etherealAddress = chainId ? networkMapping[chainIdDecimal].EtherealNFTs[0] : null
         }
     }, [chainIdDecimal, networkMapping])
+
+    function checkWeb3Connection() {
+        if (!isWeb3Enabled) {
+            dispatch({
+                type: "error",
+                title: "Web3 Connection failed",
+                message: "Please connect to Web3 to interact",
+                position: "topR",
+            })
+            return false
+        } else if (!(chainIdDecimal in networkMapping)) {
+            dispatch({
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
+                position: "topR",
+            })
+            return false
+        } else {
+            return true
+        }
+    }
     const [isNftMinted, setIsNftMinted] = useState(false)
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
@@ -48,21 +68,7 @@ export default function SellPage() {
     }, [tokenIdMinted])
 
     async function handleSubmitClick() {
-        if (!isWeb3Enabled) {
-            dispatch({
-                type: "error",
-                title: "Web3 Connection failed",
-                message: "Please connect to Web3 to interact",
-                position: "topR",
-            })
-        } else if (!(chainIdDecimal in networkMapping)) {
-            dispatch({
-                type: "error",
-                title: "Chain not handled",
-                message: "Please connect to Goerli testnet",
-                position: "topR",
-            })
-        } else {
+        if (checkWeb3Connection) {
             const mintOptions = {
                 abi: etherealNftAbi,
                 contractAddress: etherealAddress,
@@ -77,7 +83,7 @@ export default function SellPage() {
                     dispatch({
                         type: "error",
                         title: "Minting Failed",
-                        message: "Please retry later",
+                        message: "Please check console for error",
                         position: "topR",
                     })
                 },
@@ -104,10 +110,7 @@ export default function SellPage() {
     }
 
     async function getNftInformation() {
-        console.log("we query nft")
-        console.log("tokenIdMinted: ", tokenIdMinted)
         const nftUri = await tokenURI()
-        console.log("nfturi is: ", nftUri)
         if (nftUri) {
             const requestURL = nftUri.replace(
                 "ipfs://",
