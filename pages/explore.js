@@ -9,6 +9,8 @@ export default function Home() {
     const { isWeb3Enabled, chainId } = useMoralis()
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+    // Old NFTs to populate the collection, delist would take too mucht time but we don't want to display them
+    const oldCollection = "0x8ba708888ab6a79b067c5c2d00d0ff723a51639e"
 
     const { loading, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
 
@@ -22,18 +24,19 @@ export default function Home() {
                     ) : (
                         listedNfts.activeItems.map((nft) => {
                             const { price, nftAddress, tokenId, seller } = nft
-                            return (
-                                <div key={`${nftAddress}:${tokenId}`}>
-                                    <NftItem
-                                        price={price}
-                                        nftAddress={nftAddress}
-                                        tokenId={tokenId}
-                                        marketplaceAddress={marketplaceAddress}
-                                        seller={seller}
-                                        key={`${nftAddress}:${tokenId}:`}
-                                    ></NftItem>
-                                </div>
-                            )
+                            if (nftAddress != oldCollection)
+                                return (
+                                    <div key={`${nftAddress}:${tokenId}`}>
+                                        <NftItem
+                                            price={price}
+                                            nftAddress={nftAddress}
+                                            tokenId={tokenId}
+                                            marketplaceAddress={marketplaceAddress}
+                                            seller={seller}
+                                            key={`${nftAddress}:${tokenId}:`}
+                                        ></NftItem>
+                                    </div>
+                                )
                         })
                     )
                 ) : (

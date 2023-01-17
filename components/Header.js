@@ -14,6 +14,9 @@ export default function Header() {
                 <Link href="/explore" className="mr-4 p-6">
                     Explore
                 </Link>
+                <Link href="/mintpage" className="mr-4 p-6">
+                    Mint!
+                </Link>
                 <div className="mr-4 w-full bg-gradient-to-r from-deepblue to-springgreen rounded-full p-1">
                     <Link
                         href="/sell-page"

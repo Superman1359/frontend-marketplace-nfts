@@ -46,11 +46,10 @@ export default function UpdateListingNftModal({
     const { runContractFunction: cancelListing } = useWeb3Contract({
         abi: nftMarketplaceAbi,
         contractAddress: marketplaceAddress,
-        functionName: "updateListing",
+        functionName: "cancelListing",
         params: {
             nftAddress: nftAddress,
             tokenId: tokenId,
-            newPrice: ethers.utils.parseEther(PriceToUpdateListing || "0"),
         },
     })
 
@@ -144,7 +143,7 @@ export default function UpdateListingNftModal({
                     }}
                 />
 
-                <div className="text-[#7f7ce8]">or</div>
+                <div className="text-[#7f7ce8] py-3">or</div>
 
                 <button
                     onClick={() => {

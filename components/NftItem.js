@@ -53,10 +53,16 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
 
         // Not everyone got IPFS companion, so we use gateway to go to https
         if (nftUri) {
-            const requestURL = nftUri.replace("ipfs://", "https://olive-absolute-silverfish-298.mypinata.cloud/ipfs/")
+            const requestURL = nftUri.replace(
+                "ipfs://",
+                "https://olive-absolute-silverfish-298.mypinata.cloud/ipfs/"
+            )
             const nftUriResponse = await (await fetch(requestURL)).json()
             const imageURI = nftUriResponse.image
-            const imageURIURL = imageURI.replace("ipfs://", "https://olive-absolute-silverfish-298.mypinata.cloud/ipfs/")
+            const imageURIURL = imageURI.replace(
+                "ipfs://",
+                "https://olive-absolute-silverfish-298.mypinata.cloud/ipfs/"
+            )
             setImageURI(imageURIURL)
             setTokenName(nftUriResponse.name)
             setTokenDescription(nftUriResponse.description)

@@ -124,6 +124,15 @@ label[for="inputUpdateListingNftModal"] {
     padding: 7px 14px;
 }
 
+.button_minted {
+    background: #ffffff;
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+    color: #22c55e;
+    padding: 3px 8px;
+    border: solid 2px #22c55e;
+}
+
 #modal-cancel-button {
     margin-right: 15px;
     border-radius: 49px;

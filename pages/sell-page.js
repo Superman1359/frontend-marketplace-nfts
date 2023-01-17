@@ -215,7 +215,7 @@ export default function SellPage() {
                     />
                 </div>
             ) : (
-                <div className="text-deepblue font-medium text-[#94A3B8]">
+                <div className=" font-medium text-[#94A3B8]">
                     No withdrawable proceeds detected
                 </div>
             )}
