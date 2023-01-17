@@ -10,15 +10,25 @@ import { useEffect, useState, React } from "react"
 export default function SellPage() {
     const { chainId, account, isWeb3Enabled } = useMoralis() // here it is in 0x...
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
-    const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
-
+    let marketplaceAddress
+    const dispatch = useNotification()
+    useEffect(() => {
+        if (!(chainIdDecimal in networkMapping)) {
+            dispatch({
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
+                position: "topR",
+            })
+        } else {
+            marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+        }
+    }, [chainIdDecimal, networkMapping])
     const [nftAddress, setNftAddress] = useState("")
     const [tokenId, setTokenId] = useState("")
     const [priceListing, setPriceListing] = useState("")
 
     const [proceeds, setProceeds] = useState("0")
-
-    const dispatch = useNotification()
 
     const { runContractFunction } = useWeb3Contract()
 
@@ -37,7 +47,7 @@ export default function SellPage() {
     const isValidNumber = (value) => value !== "" && !isNaN(value) && parseFloat(value) > 0
     const isValid = (value) => value !== "" && !isNaN(value)
 
-    function handleSubmitClick() {
+    function checkWeb3Connection() {
         if (!isWeb3Enabled) {
             dispatch({
                 type: "error",
@@ -45,16 +55,33 @@ export default function SellPage() {
                 message: "Please connect to Web3 to interact",
                 position: "topR",
             })
-        } else if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
-            approveAndList()
-        } else if (dispatch) {
-            console.log("We doing shitty stuff")
+            return false
+        } else if (!(chainIdDecimal in networkMapping)) {
             dispatch({
-                type: "warning",
-                title: "Listing failed",
-                message: "All fields are required and should be a positive number.",
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
                 position: "topR",
             })
+            return false
+        } else {
+            return true
+        }
+    }
+
+    function handleSubmitClick() {
+        if (checkWeb3Connection()) {
+            if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
+                approveAndList()
+            } else if (dispatch) {
+                console.log("We doing shitty stuff")
+                dispatch({
+                    type: "warning",
+                    title: "Listing failed",
+                    message: "All fields are required and should be a positive number.",
+                    position: "topR",
+                })
+            }
         }
     }
 

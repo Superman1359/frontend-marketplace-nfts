@@ -11,16 +11,26 @@ import { useEffect, useState, React } from "react"
 export default function SellPage() {
     const { chainId, account, isWeb3Enabled } = useMoralis() // here it is in 0x...
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
-    const etherealAddress = chainId ? networkMapping[chainIdDecimal].EtherealNFTs[0] : null
-
+    let etherealAddress
+    const dispatch = useNotification()
+    useEffect(() => {
+        if (!(chainIdDecimal in networkMapping)) {
+            dispatch({
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
+                position: "topR",
+            })
+        } else {
+            etherealAddress = chainId ? networkMapping[chainIdDecimal].EtherealNFTs[0] : null
+        }
+    }, [chainIdDecimal, networkMapping])
     const [isNftMinted, setIsNftMinted] = useState(false)
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
     const [imageURI, setImageURI] = useState("")
 
     const [tokenIdMinted, setTokenIdMinted] = useState(0)
-
-    const dispatch = useNotification()
 
     const { runContractFunction } = useWeb3Contract()
 
@@ -43,6 +53,13 @@ export default function SellPage() {
                 type: "error",
                 title: "Web3 Connection failed",
                 message: "Please connect to Web3 to interact",
+                position: "topR",
+            })
+        } else if (!(chainIdDecimal in networkMapping)) {
+            dispatch({
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
                 position: "topR",
             })
         } else {
@@ -175,13 +192,13 @@ export default function SellPage() {
                                 <div className="pl-2 pb-1">{tokenName}</div>
                             </div>
                             <h2 className=" pl-2 text-2lg font-medium mb-[1.5%]">
-                                {tokenDescription}
+                                <span className="font-semibold">{tokenDescription}</span>
                             </h2>
                             <h2 className=" pl-2 text-2lg font-medium mb-[1.5%]">
-                                TokenId: #{tokenIdMinted}
+                                TokenId: <span className="font-semibold">#{tokenIdMinted}</span>
                             </h2>
                             <h2 className=" pl-2 text-2lg font-medium mb-[1.5%]">
-                                Address: {etherealAddress}
+                                Address: <span className="font-semibold">{etherealAddress}</span>
                             </h2>
                         </div>
                     </div>

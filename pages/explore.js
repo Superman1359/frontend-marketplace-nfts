@@ -1,5 +1,6 @@
 import NftItem from "../components/NftItem"
-import React from "react"
+import { React, useEffect } from "react"
+import { useNotification } from "web3uikit"
 import { useMoralis } from "react-moralis"
 import networkMapping from "../constants/networkMapping.json"
 import GET_ACTIVE_ITEMS from "../constants/subgraphQueries"
@@ -8,7 +9,20 @@ import { useQuery } from "@apollo/client"
 export default function Home() {
     const { isWeb3Enabled, chainId } = useMoralis()
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
-    const marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+    let marketplaceAddress
+    const dispatch = useNotification()
+    useEffect(() => {
+        if (!(chainIdDecimal in networkMapping)) {
+            dispatch({
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
+                position: "topR",
+            })
+        } else {
+            marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+        }
+    }, [chainIdDecimal, networkMapping])
     // Old NFTs to populate the collection, delist would take too mucht time but we don't want to display them
     const oldCollection = "0x8ba708888ab6a79b067c5c2d00d0ff723a51639e"
 
