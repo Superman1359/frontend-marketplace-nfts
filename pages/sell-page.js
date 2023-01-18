@@ -12,25 +12,7 @@ export default function SellPage() {
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     let marketplaceAddress
     const dispatch = useNotification()
-    useEffect(() => {
-        if (!isWeb3Enabled) {
-            dispatch({
-                type: "error",
-                title: "Web3 not connected",
-                message: "Please connect to Web3",
-                position: "topR",
-            })
-        } else if (!(chainIdDecimal in networkMapping)) {
-            dispatch({
-                type: "error",
-                title: "Chain not handled",
-                message: "Please connect to Goerli testnet",
-                position: "topR",
-            })
-        } else {
-            marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
-        }
-    }, [chainIdDecimal, networkMapping])
+    updateAddress()
     const [nftAddress, setNftAddress] = useState("")
     const [tokenId, setTokenId] = useState("")
     const [priceListing, setPriceListing] = useState("")
@@ -55,14 +37,7 @@ export default function SellPage() {
     const isValid = (value) => value !== "" && !isNaN(value)
 
     function handleSubmitClick() {
-        if (!isWeb3Enabled) {
-            dispatch({
-                type: "error",
-                title: "Web3 Connection failed",
-                message: "Please connect to Web3 to interact",
-                position: "topR",
-            })
-        } else if (!(chainIdDecimal in networkMapping)) {
+        if (!(chainIdDecimal in networkMapping)) {
             dispatch({
                 type: "error",
                 title: "Chain not handled",
@@ -71,6 +46,7 @@ export default function SellPage() {
             })
         } else if (isValid(nftAddress) && isValidNumber(tokenId) && isValidNumber(priceListing)) {
             approveAndList()
+        } else {
             dispatch({
                 type: "warning",
                 title: "Listing failed",
@@ -80,7 +56,13 @@ export default function SellPage() {
         }
     }
 
+    function updateAddress() {
+        if (chainIdDecimal in networkMapping) {
+            marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+        }
+    }
     async function approveAndList() {
+        updateAddress()
         const price = ethers.utils.parseUnits(priceListing, "ether").toString()
 
         const approveOptions = {
@@ -103,6 +85,7 @@ export default function SellPage() {
 
     async function setupUI() {
         if (isWeb3Enabled) {
+            updateAddress()
             const returnedProceeds = await runContractFunction({
                 params: {
                     abi: nftMarketplaceAbi,
@@ -164,6 +147,29 @@ export default function SellPage() {
         })
     }
 
+    async function withdrawRequest() {
+        updateAddress()
+        if (isWeb3Enabled && chainIdDecimal in networkMapping) {
+            runContractFunction({
+                params: {
+                    abi: nftMarketplaceAbi,
+                    contractAddress: marketplaceAddress,
+                    functionName: "withdrawProceeds",
+                    params: {},
+                },
+                onError: (error) => console.log(error),
+                onSuccess: () => handleWithdrawSuccess,
+            })
+        } else {
+            dispatch({
+                type: "error",
+                title: "Chain not handled",
+                message: "Please connect to Goerli testnet",
+                position: "topR",
+            })
+        }
+    }
+
     return (
         <div className={`${styles.container} flex flex-col items-center mt-[17vh]	`}>
             <h1>
@@ -207,9 +213,7 @@ export default function SellPage() {
             </form>
 
             <Button
-                onClick={() => {
-                    handleSubmitClick()
-                }}
+                onClick={handleSubmitClick}
                 text="List NFT"
                 type="button"
                 className="mb-[5%]"
@@ -219,38 +223,7 @@ export default function SellPage() {
                     <div className="text-[#312DCF] font-semibold mb-5">
                         Withdraw {proceeds} ETH proceeds
                     </div>
-                    <Button
-                        onClick={() => {
-                            if (!isWeb3Enabled) {
-                                dispatch({
-                                    type: "error",
-                                    title: "Web3 Connection failed",
-                                    message: "Please connect to Web3 to interact",
-                                    position: "topR",
-                                })
-                            } else if (!(chainIdDecimal in networkMapping)) {
-                                dispatch({
-                                    type: "error",
-                                    title: "Chain not handled",
-                                    message: "Please connect to Goerli testnet",
-                                    position: "topR",
-                                })
-                            } else {
-                                runContractFunction({
-                                    params: {
-                                        abi: nftMarketplaceAbi,
-                                        contractAddress: marketplaceAddress,
-                                        functionName: "withdrawProceeds",
-                                        params: {},
-                                    },
-                                    onError: (error) => console.log(error),
-                                    onSuccess: () => handleWithdrawSuccess,
-                                })
-                            }
-                        }}
-                        text="Withdraw"
-                        type="button"
-                    />
+                    <Button onClick={withdrawRequest} text="Withdraw" type="button" />
                 </div>
             ) : (
                 <div className=" font-medium text-[#94A3B8]">

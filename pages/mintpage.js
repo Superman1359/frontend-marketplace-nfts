@@ -12,39 +12,11 @@ export default function SellPage() {
     let etherealAddress
     const dispatch = useNotification()
     useEffect(() => {
-        if (!(chainIdDecimal in networkMapping)) {
-            dispatch({
-                type: "error",
-                title: "Chain not handled",
-                message: "Please connect to Goerli testnet",
-                position: "topR",
-            })
-        } else {
+        if (chainIdDecimal in networkMapping) {
             etherealAddress = chainId ? networkMapping[chainIdDecimal].EtherealNFTs[0] : null
         }
     }, [chainIdDecimal, networkMapping])
 
-    function checkWeb3Connection() {
-        if (!isWeb3Enabled) {
-            dispatch({
-                type: "error",
-                title: "Web3 Connection failed",
-                message: "Please connect to Web3 to interact",
-                position: "topR",
-            })
-            return false
-        } else if (!(chainIdDecimal in networkMapping)) {
-            dispatch({
-                type: "error",
-                title: "Chain not handled",
-                message: "Please connect to Goerli testnet",
-                position: "topR",
-            })
-            return false
-        } else {
-            return true
-        }
-    }
     const [isNftMinted, setIsNftMinted] = useState(false)
     const [tokenName, setTokenName] = useState("")
     const [tokenDescription, setTokenDescription] = useState("")
@@ -68,7 +40,7 @@ export default function SellPage() {
     }, [tokenIdMinted])
 
     async function handleSubmitClick() {
-        if (checkWeb3Connection) {
+        if (isWeb3Enabled && chainIdDecimal in networkMapping) {
             const mintOptions = {
                 abi: etherealNftAbi,
                 contractAddress: etherealAddress,
@@ -87,6 +59,13 @@ export default function SellPage() {
                         position: "topR",
                     })
                 },
+            })
+        } else {
+            dispatch({
+                type: "error",
+                message: "Please connect to Goerli testnet",
+                title: "Web3 Not Connected",
+                position: "topR",
             })
         }
     }
