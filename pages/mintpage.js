@@ -11,11 +11,7 @@ export default function SellPage() {
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     let etherealAddress
     const dispatch = useNotification()
-    useEffect(() => {
-        if (chainIdDecimal in networkMapping) {
-            etherealAddress = chainId ? networkMapping[chainIdDecimal].EtherealNFTs[0] : null
-        }
-    }, [chainIdDecimal, networkMapping])
+    updateAddress()
 
     const [isNftMinted, setIsNftMinted] = useState(false)
     const [tokenName, setTokenName] = useState("")
@@ -41,12 +37,14 @@ export default function SellPage() {
 
     async function handleSubmitClick() {
         if (isWeb3Enabled && chainIdDecimal in networkMapping) {
+            updateAddress()
             const mintOptions = {
                 abi: etherealNftAbi,
                 contractAddress: etherealAddress,
                 functionName: "mintNFT",
                 msgValue: "10000000000000000",
             }
+
             await runContractFunction({
                 params: mintOptions,
                 onSuccess: (tx) => handleMintSuccess(tx),
@@ -87,8 +85,14 @@ export default function SellPage() {
             console.log("error")
         }
     }
+    function updateAddress() {
+        if (chainIdDecimal in networkMapping) {
+            etherealAddress = chainId ? networkMapping[chainIdDecimal].EtherealNFTs[0] : null
+        }
+    }
 
     async function getNftInformation() {
+        updateAddress()
         const nftUri = await tokenURI()
         if (nftUri) {
             const requestURL = nftUri.replace(
