@@ -10,7 +10,6 @@ export default function Home() {
     const { isWeb3Enabled, chainId } = useMoralis()
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     let marketplaceAddress
-    const dispatch = useNotification()
     updateAddress()
 
     // Old NFTs to populate the collection, delist would take too mucht time but we don't want to display them
@@ -23,35 +22,6 @@ export default function Home() {
         }
     }
 
-    function checkEnable() {
-        if (isWeb3Enabled) {
-            console.log("A")
-            updateAddress()
-            console.log(marketplaceAddress)
-            if (marketplaceAddress != "") {
-                console.log("Z")
-                return true
-            } else {
-                dispatch({
-                    type: "error",
-                    title: "Chain not handled",
-                    message: "Please connect to Goerli testnet",
-                    position: "topR",
-                })
-                console.log("Z")
-                return false
-            }
-        } else {
-            dispatch({
-                type: "error",
-                title: "Web3 not connected",
-                message: "Please connect to Goerli testnet",
-                position: "topR",
-            })
-            console.log("Z")
-            return false
-        }
-    }
     return (
         <div className="pt-2 h-full px-24 pl-28">
             <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
