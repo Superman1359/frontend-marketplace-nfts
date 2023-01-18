@@ -11,23 +11,24 @@ export default function Home() {
     const chainIdDecimal = chainId ? parseInt(chainId).toString() : null
     let marketplaceAddress
     const dispatch = useNotification()
-    useEffect(() => {
-        if (!(chainIdDecimal in networkMapping)) {
-            dispatch({
-                type: "error",
-                title: "Chain not handled",
-                message: "Please connect to Goerli testnet",
-                position: "topR",
-            })
-        } else {
-            marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
-        }
-    }, [chainIdDecimal, networkMapping])
+    updateAddress()
+
     // Old NFTs to populate the collection, delist would take too mucht time but we don't want to display them
     const oldCollection = "0x8ba708888ab6a79b067c5c2d00d0ff723a51639e"
 
     const { loading, data: listedNfts } = useQuery(GET_ACTIVE_ITEMS)
-
+    function updateAddress() {
+        if (chainIdDecimal in networkMapping) {
+            marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+        } else {
+            dispatch({
+                type: "error",
+                title: "Web3 Not Connected",
+                message: "Please connect to Goerli testnet and refresh",
+                position: "topR",
+            })
+        }
+    }
     return (
         <div className="pt-2 h-full px-24 pl-28">
             <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
