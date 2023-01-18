@@ -100,8 +100,13 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
         }
     }, [])
 
+    function formatPrice(price) {
+        const priceEth = ethers.utils.formatUnits(price, "ether")
+        return priceEth.substring(0, 6)
+    }
+
     return (
-        <div>
+        <div style={{ width: screenWidth / 5, marginRight: 15 }}>
             <div>
                 {imageURI ? (
                     <div className="pr-4 pb-4 ">
@@ -159,7 +164,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                                 className="mr-2"
                                             />
                                             <div className="font-extrabold">
-                                                {ethers.utils.formatUnits(price, "ether")} ETH{" "}
+                                                {formatPrice(price)} ETH{" "}
                                             </div>
                                         </div>
                                         <div className="italic text-sm pl-2 mt-2">

@@ -23,42 +23,46 @@ export default function Home() {
     }
 
     return (
-        <div className="pt-2 h-full px-24 pl-28">
-            <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
-            <div className="flex flex-wrap">
-                {isWeb3Enabled ? (
-                    marketplaceAddress ? (
-                        loading || !listedNfts ? (
-                            <div className="text-deepblue font-extrabold pr-8">Loading... </div>
+        <div className="flex flex-row justify-center">
+            <div className="pt-2 h-full px-24 pl-28">
+                <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
+                <div className="flex flex-wrap">
+                    {isWeb3Enabled ? (
+                        marketplaceAddress ? (
+                            loading || !listedNfts ? (
+                                <div className="text-deepblue font-extrabold pr-8">
+                                    Loading...{" "}
+                                </div>
+                            ) : (
+                                listedNfts.activeItems.map((nft) => {
+                                    const { price, nftAddress, tokenId, seller } = nft
+                                    updateAddress()
+                                    if (nftAddress != oldCollection)
+                                        return (
+                                            <div key={`${nftAddress}:${tokenId}`}>
+                                                <NftItem
+                                                    price={price}
+                                                    nftAddress={nftAddress}
+                                                    tokenId={tokenId}
+                                                    marketplaceAddress={marketplaceAddress}
+                                                    seller={seller}
+                                                    key={`${nftAddress}:${tokenId}:`}
+                                                ></NftItem>
+                                            </div>
+                                        )
+                                })
+                            )
                         ) : (
-                            listedNfts.activeItems.map((nft) => {
-                                const { price, nftAddress, tokenId, seller } = nft
-                                updateAddress()
-                                if (nftAddress != oldCollection)
-                                    return (
-                                        <div key={`${nftAddress}:${tokenId}`}>
-                                            <NftItem
-                                                price={price}
-                                                nftAddress={nftAddress}
-                                                tokenId={tokenId}
-                                                marketplaceAddress={marketplaceAddress}
-                                                seller={seller}
-                                                key={`${nftAddress}:${tokenId}:`}
-                                            ></NftItem>
-                                        </div>
-                                    )
-                            })
+                            <div className="text-[#EF4444] font-bold font-xl pr-8">
+                                Please connect to Goerli testnet{" "}
+                            </div>
                         )
                     ) : (
                         <div className="text-[#EF4444] font-bold font-xl pr-8">
-                            Please connect to Goerli testnet{" "}
+                            Web3 not connected{" "}
                         </div>
-                    )
-                ) : (
-                    <div className="text-[#EF4444] font-bold font-xl pr-8">
-                        Web3 not connected{" "}
-                    </div>
-                )}
+                    )}
+                </div>
             </div>
         </div>
     )
