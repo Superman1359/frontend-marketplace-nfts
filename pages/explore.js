@@ -20,13 +20,36 @@ export default function Home() {
     function updateAddress() {
         if (chainIdDecimal in networkMapping) {
             marketplaceAddress = chainId ? networkMapping[chainIdDecimal].NftMarketplace[0] : null
+        }
+    }
+
+    function checkEnable() {
+        if (isWeb3Enabled) {
+            console.log("A")
+            updateAddress()
+            console.log(marketplaceAddress)
+            if (marketplaceAddress != "") {
+                console.log("Z")
+                return true
+            } else {
+                dispatch({
+                    type: "error",
+                    title: "Chain not handled",
+                    message: "Please connect to Goerli testnet",
+                    position: "topR",
+                })
+                console.log("Z")
+                return false
+            }
         } else {
             dispatch({
                 type: "error",
-                title: "Web3 Not Connected",
-                message: "Please connect to Goerli testnet and refresh",
+                title: "Web3 not connected",
+                message: "Please connect to Goerli testnet",
                 position: "topR",
             })
+            console.log("Z")
+            return false
         }
     }
     return (
@@ -34,28 +57,37 @@ export default function Home() {
             <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
             <div className="flex flex-wrap">
                 {isWeb3Enabled ? (
-                    loading || !listedNfts ? (
-                        <div className="text-deepblue font-extrabold pr-8">Loading... </div>
+                    marketplaceAddress ? (
+                        loading || !listedNfts ? (
+                            <div className="text-deepblue font-extrabold pr-8">Loading... </div>
+                        ) : (
+                            listedNfts.activeItems.map((nft) => {
+                                const { price, nftAddress, tokenId, seller } = nft
+                                updateAddress()
+                                if (nftAddress != oldCollection)
+                                    return (
+                                        <div key={`${nftAddress}:${tokenId}`}>
+                                            <NftItem
+                                                price={price}
+                                                nftAddress={nftAddress}
+                                                tokenId={tokenId}
+                                                marketplaceAddress={marketplaceAddress}
+                                                seller={seller}
+                                                key={`${nftAddress}:${tokenId}:`}
+                                            ></NftItem>
+                                        </div>
+                                    )
+                            })
+                        )
                     ) : (
-                        listedNfts.activeItems.map((nft) => {
-                            const { price, nftAddress, tokenId, seller } = nft
-                            if (nftAddress != oldCollection)
-                                return (
-                                    <div key={`${nftAddress}:${tokenId}`}>
-                                        <NftItem
-                                            price={price}
-                                            nftAddress={nftAddress}
-                                            tokenId={tokenId}
-                                            marketplaceAddress={marketplaceAddress}
-                                            seller={seller}
-                                            key={`${nftAddress}:${tokenId}:`}
-                                        ></NftItem>
-                                    </div>
-                                )
-                        })
+                        <div className="text-[#EF4444] font-bold font-xl pr-8">
+                            Please connect to Goerli testnet{" "}
+                        </div>
                     )
                 ) : (
-                    <div className="text-deepblue font-extrabold pr-8">Web3 not connected </div>
+                    <div className="text-[#EF4444] font-bold font-xl pr-8">
+                        Web3 not connected{" "}
+                    </div>
                 )}
             </div>
         </div>

@@ -72,8 +72,8 @@ export default function SellPage() {
         const mintTxReceipt = await tx.wait(1)
         dispatch({
             type: "success",
-            message: "NFT Minted!",
-            title: "Your Ethereal has been minted",
+            message: "Your Ethereal has been minted",
+            title: "NFT Minted!",
             position: "topR",
         })
         const tokenId = Number(mintTxReceipt.events[0].args.tokenId)
