@@ -105,7 +105,7 @@ label[for="inputUpdateListingNftModal"] {
 
 #container_landing_page {
     height: 92vh !important;
-    overflow-y: hidden;
+    overflow-y: hidden !important;
 }
 
 #modalNft > div > footer > button:not(#modal-cancel-button) {
@@ -276,7 +276,7 @@ button[data-testid="test-button"]:focus {
 #sub-container-mp {
     width: 40%;
 }
-@media (max-height: 820px) {
+@media (max-height: 620px) {
     #container_landing_page {
         padding-top: 50%;
     }
