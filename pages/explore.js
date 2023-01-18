@@ -24,9 +24,11 @@ export default function Home() {
 
     return (
         <div className="flex flex-row justify-center">
-            <div className="pt-2 h-full px-24 pl-28">
-                <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue">Recently Listed</h1>
-                <div className="flex flex-wrap">
+            <div className="pt-2 h-full px-24 pl-28 rp-wrapper-explore">
+                <h1 className="pt-10 pb-5 font-bold text-2xl text-deepblue rp-recently">
+                    Recently Listed
+                </h1>
+                <div className="flex flex-wrap rp-container-img-explore">
                     {isWeb3Enabled ? (
                         marketplaceAddress ? (
                             loading || !listedNfts ? (

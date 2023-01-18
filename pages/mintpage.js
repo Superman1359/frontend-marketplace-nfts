@@ -126,8 +126,8 @@ export default function SellPage() {
     }, [])
 
     return (
-        <div className="flex px-24 pl-28 mt-[5%] justify-between items-start h-full">
-            <div className="w-[40%] ">
+        <div className="flex px-24 pl-28 mt-[5%] justify-between items-start h-full container-mp">
+            <div className="w-[40%]" id="sub-container-mp">
                 <h1 className="font-extrabold  text-[#312dcf] text-3xl mb-[5%]">
                     Unlock the Fantasy of the Ethereal Collection
                 </h1>
@@ -190,7 +190,7 @@ export default function SellPage() {
                     </div>
                 )}
             </div>
-            <div className="w-1/2 flex items-end justify-center ">
+            <div className="w-1/2 flex items-end justify-center image-rp">
                 <div className="w-[80%] ">
                     {imageURI ? (
                         <div className="flex flex-col justify-center items-center">

@@ -109,7 +109,7 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
         <div style={{ width: screenWidth / 5, marginRight: 15 }}>
             <div>
                 {imageURI ? (
-                    <div className="pr-4 pb-4 ">
+                    <div className="mr-4 mb-4 container-card">
                         <UpdateListingNftModal
                             isVisible={showModal && isOwnedByUSer}
                             tokenId={tokenId}
@@ -134,21 +134,20 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                         />
                         <Card
                             onClick={handleCardClick}
-                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw "
+                            className="bg-white border-indigo border-2 border-solid rounded-36 w-20vw wrapper-nft-img "
                         >
                             <div className="flex flex-col justify-start items-center h-full ">
-                                <div className="">
+                                <div className="container-img">
                                     <Image
-                                        unoptimized
                                         loader={() => imageURI}
                                         src={imageURI}
                                         width={screenWidth / 5}
                                         height={200}
                                         alt="Image of the NFT"
-                                        className="rounded-36 mb-3  "
+                                        className="rounded-36 mb-3 nft-img "
                                     />
                                 </div>
-                                <div className="text-deepblue flex flex-col justify-center items-start w-full ">
+                                <div className="text-deepblue flex flex-col justify-center items-start w-full  rp-inner-card">
                                     <div className="font-bold flex flex-row pb-1 pl-2">
                                         <div>#{tokenId}</div>
                                         <div className="pl-2 pb-1">{tokenName}</div>
@@ -161,13 +160,13 @@ export default function NftItem({ price, nftAddress, tokenId, marketplaceAddress
                                                 alt="Ethereum logo"
                                                 width={25}
                                                 height={25}
-                                                className="mr-2"
+                                                className="mr-2 rp-logo"
                                             />
                                             <div className="font-extrabold">
                                                 {formatPrice(price)} ETH{" "}
                                             </div>
                                         </div>
-                                        <div className="italic text-sm pl-2 mt-2">
+                                        <div className="italic text-sm pl-2 mt-2 rp-owner">
                                             {formattedSellerAddress}
                                         </div>
                                     </div>

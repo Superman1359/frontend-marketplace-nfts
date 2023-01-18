@@ -4,13 +4,13 @@ import React from "react"
 
 export default function Header() {
     return (
-        <nav className="flex flex-row px-24 pl-28 justify-between items-center	">
+        <nav className="flex flex-row px-24 pl-28 justify-between items-center responsive-banner">
             <Link href="/" className="py-4 text-5xl text-deepblue tracking-tighter font-medium">
                 <p>
                     <span className="font-extrabold">NFT</span>Marketplace
                 </p>
             </Link>
-            <div className="flex flex-row font-semibold	items-center text-deepblue text-xl ">
+            <div className="flex flex-row font-semibold	items-center text-deepblue text-xl rp-banner-list">
                 <Link href="/explore" className="mr-4 p-6">
                     Explore
                 </Link>

@@ -6,10 +6,9 @@ import ImgLandingPage from "../components/assets/Illustration.png"
 export default function LandingPage() {
     return (
         <div id="container_landing_page" className="flex flex-row justify-start">
-            <div className="w-[59%] pl-28 flex flex-col justify-center items-center h-full mr-12">
-                <div>
-
-                    <div className="font-extrabold text-deepblue text-[3em] mb-6">
+            <div className="w-[59%] pl-28 flex flex-col justify-center items-center h-full mr-12 responsive-lp-left">
+                <div className="rp-sm-ali-it-cent">
+                    <div className="font-extrabold text-deepblue text-[3em] mb-6 rp-mb-3">
                         <h1>
                             Explore the Boundaries of{" "}
                             <span className="text-flashgreen">Digital Art</span> and{" "}
@@ -32,13 +31,8 @@ export default function LandingPage() {
                     </Link>
                 </div>
             </div>
-            <div className="flex flex-col justify-end items-end w-[70%] mb-[5%]">
-                <Image
-                    unoptimized
-                    src={ImgLandingPage}
-                    alt="Image of the NFT"
-                    className=" "
-                />
+            <div className="flex flex-col justify-end items-end w-[70%] mb-[5%] image-rp">
+                <Image src={ImgLandingPage} alt="Image of the NFT" />
             </div>
         </div>
     )

@@ -216,3 +216,161 @@ button[data-testid="test-button"]:hover {
 button[data-testid="test-button"]:focus {
     border: 2px solid #22c55e !important;
 }
+
+.responsive-banner {
+    width: 100%;
+}
+
+@media (max-width: 1000) {
+    html {
+        font-size: calc(15px + 0.120625vw);
+    }
+}
+
+@media (max-width: 450) {
+    html {
+        font-size: calc(10px + 0.06625vw);
+    }
+    .container-mp {
+        padding: 0 !important;
+    }
+}
+
+#image-lp {
+    display: flex;
+}
+
+@media (max-width: 1200px) {
+    .responsive-banner {
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+    .rp-banner-list {
+        display: flex;
+        flex-direction: column-reverse;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+    }
+    .container-mp {
+        justify-content: center;
+        margin-bottom: 3%;
+    }
+    .image-rp {
+        display: none;
+    }
+    #container_landing_page {
+        justify-content: center;
+    }
+    .rp-sm-ali-it-cent {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    .rp-mb-3 {
+        margin-bottom: 0.5rem;
+    }
+}
+#sub-container-mp {
+    width: 40%;
+}
+@media (max-height: 820px) {
+    #container_landing_page {
+        padding-top: 50%;
+    }
+}
+@media (max-width: 1200px) {
+    #sub-container-mp {
+        width: 100%;
+    }
+}
+
+@media (max-width: 850px) {
+    .rp-container-img-explore {
+        flex-direction: column;
+        width: 100%;
+    }
+}
+
+@media (max-width: 1250px) {
+    .rp-wrapper-explore {
+        display: flex;
+        justify-content: center;
+        margin: 3vh 6vw;
+    }
+    .wrapper-nft-img {
+        width: 25vw;
+    }
+    .nft-img {
+        width: 15vw;
+    }
+    .rp-recently {
+        display: none;
+    }
+    .rp-container-img-explore {
+        display: flex;
+        justify-content: space-between;
+        width: 80%;
+    }
+}
+
+@media (max-width: 950px) {
+    .wrapper-nft-img {
+        width: 45vw;
+    }
+    .rp-container-img-explore {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+        width: 80%;
+        position: relative;
+        left: -12vw;
+    }
+}
+
+@media (max-width: 950px) {
+    .wrapper-nft-img {
+        width: 45vw;
+    }
+    .rp-container-img-explore {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+        width: 80%;
+        position: relative;
+        left: -12vw;
+    }
+}
+@media (max-width: 500px) {
+    .wrapper-nft-img {
+        width: 45vw;
+    }
+    .rp-owner {
+        display: none;
+    }
+    .rp-logo {
+        display: none;
+    }
+    .rp-inner-card {
+        align-items: center;
+    }
+    .rp-container-img-explore {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        justify-content: flex-start;
+        align-items: center;
+        align-content: stretch;
+        width: 80%;
+        position: relative;
+        left: -12vw;
+    }
+}
