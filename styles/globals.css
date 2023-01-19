@@ -10,9 +10,16 @@ body {
     height: 95% !important;
     width: auto;
 }
-#explore_lp {
+.button_lp {
     background: linear-gradient(90deg, #312dcf 0%, #7073f9 108.08%);
     border: 2px solid #ffffff;
+
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+}
+.button_lp_op {
+    background: #f1f5f9;
+    border: 2px solid #312dcf;
 
     box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
     border-radius: 49px;

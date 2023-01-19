@@ -24,10 +24,15 @@ export default function LandingPage() {
                     </p>
                     <Link
                         href="/explore"
-                        id="explore_lp"
-                        className="font-semibold px-8 py-2 text-white"
+                        className="font-semibold px-8 py-2  mr-[15%]  text-white button_lp"
                     >
                         Explore
+                    </Link>
+                    <Link
+                        href="https://github.com/julienbrs/nft-marketplace"
+                        className="font-semibold px-8 py-2 text-deepblue button_lp_op"
+                    >
+                        Check code
                     </Link>
                 </div>
             </div>
