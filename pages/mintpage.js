@@ -50,12 +50,22 @@ export default function SellPage() {
                 onSuccess: (tx) => handleMintSuccess(tx),
                 onError: (error) => {
                     console.log(error)
-                    dispatch({
-                        type: "error",
-                        title: "Minting Failed",
-                        message: "Please check console for error",
-                        position: "topR",
-                    })
+                    if (error.message.includes("insufficient funds")) {
+                        dispatch({
+                            type: "error",
+                            title: "Insufficient Funds",
+                            message:
+                                "Please ensure that you have enough ether to cover the transaction cost.",
+                            position: "topR",
+                        })
+                    } else {
+                        dispatch({
+                            type: "error",
+                            title: "Minting Failed",
+                            message: "Please check console for error",
+                            position: "topR",
+                        })
+                    }
                 },
             })
         } else {
@@ -72,7 +82,7 @@ export default function SellPage() {
         const mintTxReceipt = await tx.wait(1)
         dispatch({
             type: "success",
-            message: "Your Ethereal has been minted",
+            message: "Your Ethereal has been minted, please do not refresh",
             title: "NFT Minted!",
             position: "topR",
         })

@@ -17,6 +17,14 @@ body {
     box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
     border-radius: 49px;
 }
+.button_lp:hover {
+    background: linear-gradient(180deg, #312dcf 0%, #7073f9 108.08%);
+    border: 2px solid #ffffff;
+
+    box-shadow: 0px 6px 12px rgba(171, 190, 209, 0.3);
+    border-radius: 49px;
+}
+
 .button_lp_op {
     background: #f1f5f9;
     border: 2px solid #312dcf;
@@ -253,6 +261,9 @@ button[data-testid="test-button"]:focus {
         flex-direction: column;
         justify-content: flex-start;
     }
+    .button_lp {
+        margin-right: 0;
+    }
     .rp-banner-list {
         display: flex;
         flex-direction: column-reverse;
@@ -380,4 +391,10 @@ button[data-testid="test-button"]:focus {
         position: relative;
         left: -12vw;
     }
+}
+
+.button_lp_op:hover {
+    background-color: #312dcf;
+    color: #f1f5f9;
+    border: 2px solid #ffffff;
 }

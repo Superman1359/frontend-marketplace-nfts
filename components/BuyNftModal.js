@@ -56,6 +56,33 @@ export default function BuyNftModal({
         }
     }, [])
 
+    async function handleBuy() {
+        buyItem({
+            onError: (error) => {
+                console.log(error)
+                if (error.message.includes("insufficient funds")) {
+                    dispatch({
+                        type: "error",
+                        title: "Insufficient Funds",
+                        message:
+                            "Please ensure that you have enough ether to cover the transaction cost.",
+                        position: "topR",
+                    })
+                } else {
+                    dispatch({
+                        type: "error",
+                        title: "Minting Failed",
+                        message: "Please check console for error",
+                        position: "topR",
+                    })
+                }
+            },
+            onSuccess: () => {
+                handleBuyItemSuccess()
+            },
+        })
+    }
+
     const handleBuyItemSuccess = () => {
         dispatch({
             type: "success",
@@ -70,16 +97,7 @@ export default function BuyNftModal({
             cancelText="Cancel"
             id="modalNft"
             isVisible={isVisible}
-            onOk={() => {
-                buyItem({
-                    onError: (error) => {
-                        console.log(error)
-                    },
-                    onSuccess: () => {
-                        handleBuyItemSuccess()
-                    },
-                })
-            }}
+            onOk={handleBuy}
             onCancel={onClose}
             onCloseButtonPressed={onClose}
         >
@@ -107,7 +125,7 @@ export default function BuyNftModal({
                         {ethers.utils.formatUnits(price, "ether")} ETH{" "}
                     </div>
                 </div>
-                <button className="font-semibold" id="buy_button_modal">
+                <button onClick={handleBuy} className="font-semibold" id="buy_button_modal">
                     Buy this NFT!
                 </button>
             </div>
