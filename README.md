@@ -1,36 +1,73 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+<a name="readme-top"></a>
+[![GitHub](https://img.shields.io/badge/github-%23121011.svg?style=for-the-badge&logo=github&logoColor=white)](https://github.com/julienbrs)
+[![LinkedIn][linkedin-shield]][linkedin-url]
 
-## Getting Started
+<!-- PROJECT LOGO -->
+<br />
+<div align="center">
+  <a href="https://frontend-marketplace-nfts.vercel.app/">
+    <img src="components/assets/ethereal.png" alt="Logo" width="160" height="160">
+  </a>
+  </a>
+  <h3 align="center">
+    <a href="https://frontend-marketplace-nfts.vercel.app/">Dapp Marketplace</a>
+  </h3>
+  </p>
+</div>
+<!-- TABLE OF CONTENTS -->
+<summary>Table of Contents</summary>
+<ol>
+<li>
+    <a href="#about-the-project">About The Project</a>
+</li>
+<li>
+    <a href="#getting-started">Getting Started</a>
+    <ul>
+    <li><a href="#prerequisites">Prerequisites</a></li>
+    <li><a href="#installation">Installation</a></li>
+    <li><a href="#usage">Usage</a></li>
+    </ul>
+</li>
+<li><a href="#contact">Contact</a></li>
+</ol>
+<br />
+<!-- ABOUT THE PROJECT -->
 
-First, run the development server:
+Test the dApp here: [NFT Marketplace](https://frontend-marketplace-nfts.vercel.app/)
 
-```bash
-npm run dev
-# or
-yarn dev
-```
+Check the smart contract here: [Backend repositorie](https://github.com/julienbrs/nft-marketplace)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+</br>
 
-You can start editing the page by modifying `pages/index.js`. The page auto-updates as you edit the file.
+## About The Project
+![React Native](https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
+![Next JS](https://img.shields.io/badge/Next-black?style=for-the-badge&logo=next.js&logoColor=white)
+![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
 
-[API routes](https://nextjs.org/docs/api-routes/introduction) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.js`.
+dApp Marketplace frontend built using Next.js and React.js. It allows users to list, buy and sell Non-Fungible Tokens (NFTs) using the Goerli tesnet. 
 
-The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/api-routes/introduction) instead of React pages.
+It uses IPFS to store image & URI associated with the NFTs, and TheGraph to query the events.
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-## Learn More
+## Goal
+Please note that this project is for educational purposes only and not meant for production use. The project was built with the goal of providing a user-friendly interface for interacting with the blockchain, making it accessible to a wider audience.
 
-To learn more about Next.js, take a look at the following resources:
+<br />
+<p align="center">
+  <img src="components/assets/NFTMarketplace.png" alt="Dapp Marketplace Screenshot"/>
+</p>
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+<!-- CONTACT -->
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Contact
 
-## Deploy on Vercel
+Bourseau Julien - _2nd year student at Ensimag, 2022_ - julien.bourseau@gmail.com
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Project Link: [https://github.com/julienbrs/nft-marketplace](https://github.com/julienbrs/nft-marketplace)
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+<p align="right">(<a href="#readme-top">back to top</a>)</p>
+
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/julien-bourseau-ba2239228
